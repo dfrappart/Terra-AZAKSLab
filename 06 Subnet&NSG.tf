@@ -128,6 +128,18 @@ module "AKS_Subnet" {
 
 }
 
+module "AKSNoRbac_Subnet" {
+  #Module location
+  source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
+
+  #Module variable
+  SubnetName          = "${lookup(var.SubnetName, 8)}_${module.VNetSpoke1.Name}"
+  RGName              = "${module.ResourceGroupHubSpoke.Name}"
+  vNetName            = "${module.VNetSpoke1.Name}"
+  Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 8)}"
+
+
+}
 ######################################################################
 # Spoke 2 FE Subnet
 ######################################################################
