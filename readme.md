@@ -1,1 +1,1 @@
-#This template deploys the based environment for MS Experience Demo
+#This template is my base for AKS test such as AKS deplyment, AAD integration and other cool stuff
