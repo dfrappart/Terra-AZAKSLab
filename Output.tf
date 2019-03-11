@@ -290,3 +290,80 @@ output "KeyVault_enabled_for_disk_encryption" {
 output "KeyVault_enabled_for_template_deployment" {
   value = "${module.KeyVault.KeyVault_enabled_for_template_deployment}"
 }
+
+######################################################
+#Created AKS Output
+
+output "AKSClusterName" {
+  value = "${module.AKSClus.KubeName}"
+}
+
+output "AKSClusterLocation" {
+  value = "${module.AKSClus.KubeLocation}"
+}
+
+output "AKSClusterRG" {
+  value = "${module.AKSClus.KubeRG}"
+}
+
+output "AKSClusterVersion" {
+  value = "${module.AKSClus.KubeVersion}"
+}
+
+output "AKSClusterId" {
+  value = "${module.AKSClus.KubeId}"
+}
+
+output "AKSClusterFQDN" {
+  value = "${module.AKSClus.KubeFQDN}"
+}
+
+output "AKSClusterAdminConfig_ClusCACert" {
+  value = "${module.AKSClus.KubeAdminCFG_ClusCACert}"
+}
+
+output "AKSClusterAdminConfig_ClientKey" {
+  value = "${module.AKSClus.KubeAdminCFG_ClientKey}"
+}
+
+output "AKSClusterAdminConfig_ClientCert" {
+  value = "${module.AKSClus.KubeAdminCFG_ClientCertificate}"
+}
+
+output "AKSClusterAdminConfig_Password" {
+  value = "${module.AKSClus.KubeAdminCFG_Password}"
+}
+
+output "AKSClusterAdminConfig_Username" {
+  value = "${module.AKSClus.KubeAdminCFG_UserName}"
+}
+
+output "AKSClusterAdminConfig_Hostname" {
+  value = "${module.AKSClus.KubeAdminCFG_HostName}"
+}
+
+output "AKSClusterAdminConfig" {
+  sensitive = true
+  value = "${module.AKSClus.KubeAdminCFG}"
+}
+
+output "AKSClusterAdminConfigRaw" {
+  sensitive = true
+  value = "${module.AKSClus.KubeAdminCFGRaw}"
+}
+
+output "AKSClusterConfig" {
+  sensitive = true
+  value = "${module.AKSClus.KubeCfg}"
+}
+
+
+output "AKSClusterConfigRaw" {
+  sensitive = true
+  value = "${module.AKSClus.KubeCfgRaw}"
+}
+
+output "AKSClusterNodeRG" {
+  value = "${module.AKSClus.NodeRG}"
+}
+

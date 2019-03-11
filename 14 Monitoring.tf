@@ -4,12 +4,23 @@
 
 #Creating a log analytics workspace
 
+module "AKSRandomSuffix" {
+    #Module source
+    source = "github.com/dfrappart/Terra-AZModuletest//Modules//00 RandomString/"
+
+    #Module variables
+    stringlenght        = "5"
+    stringspecial       = "false"
+    stringupper         = "false"
+    
+}
+
 module "AKSWorkspace" {
     #Module source
     source = "github.com/dfrappart/Terra-AZModuletest//Modules//45 Log analytics workspace/"
 
     #Module variables
-    LAWName             = "${var.AKSWorkspaceName}"
+    LAWName             = "${var.AKSWorkspaceName}${module.AKSRandomSuffix.Result}"
     LAWLocation         = "${var.AzureRegion}"
     LAWRGName           = "${module.ResourceGroupAKS.Name}"
     LAWLocation         = "${var.AzureRegion}"

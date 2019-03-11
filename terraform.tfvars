@@ -22,6 +22,7 @@ SubnetAddressRange = {
     "5" = "10.233.0.0/24"
     "6" = "10.233.1.0/24"
     "7" = "10.233.2.0/24"
+    "8" = "10.232.16.0/20"
   }
 
 SubnetName = {
@@ -33,13 +34,16 @@ SubnetName = {
     "5" = "AppGW_Subnet"
     "6" = "FE_Subnet"
     "7" = "BE_Subnet"
+    "8" = "AKS_Subnet"
   }
 
+AKSName                           = "AKSLabCluster"
+AKSWorkspaceName                  = "AKSWorkspace"
 LogAnalyticsSolutionName          = "ContainerInsights"
 LogAnalyticsSolutionPublisher     = "Microsoft"
 LogAnalyticsSolutionProductName   = "OMSGallery/ContainerInsights"
 
-EnvironmentTag      = "HubSpoke"
+EnvironmentTag      = "AKSLab"
 EnvironmentUsageTag = "PoC"
 OwnerTag            = "DF"
-ProvisioningDateTag = "20190222"
+ProvisioningDateTag = "20190307"

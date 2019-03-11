@@ -154,7 +154,18 @@ variable "sku" {
   }
 }
 
-#Variable definig the Log analytics workspace for AKS
+#Variable defining the AKS Cluster name
+
+variable "AKSName" {
+  type = "string"
+}
+
+variable "AKSRBACEnabled" {
+  type = "string"
+  default = "true"
+}
+
+#Variable defining the Log analytics workspace for AKS
 
 variable "AKSWorkspaceName" {
   type = "string"
@@ -177,7 +188,7 @@ variable "LogAnalyticsSolutionProductName" {
 
 }
 
-#Tags definiiton
+#Tags definition
 
 variable "EnvironmentTag" {
   type = "string"
