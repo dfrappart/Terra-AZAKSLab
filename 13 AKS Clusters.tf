@@ -56,7 +56,7 @@ module "AKSClusNoRbac" {
 
   #Module variable
   AKSRGName           = "${var.RGName}"
-  AKSClusName         = "${var.AKSName}"
+  AKSClusName         = "${var.AKSName}NoRbac"
   AKSprefix           = "${var.AKSName}"
   AKSLocation         = "${var.AzureRegion}"
   AKSSubnetId         = "${module.AKSNoRbac_Subnet.Id}"
