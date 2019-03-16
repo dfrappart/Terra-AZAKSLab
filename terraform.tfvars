@@ -34,7 +34,7 @@ SubnetName = {
     "5" = "AppGW_Subnet"
     "6" = "FE_Subnet"
     "7" = "BE_Subnet"
-    "8" = "AKS_Subnet"
+    "8" = "AKS_Subnet2"
   }
 
 AKSName                           = "AKSLabCluster"
@@ -46,4 +46,4 @@ LogAnalyticsSolutionProductName   = "OMSGallery/ContainerInsights"
 EnvironmentTag      = "AKSLab"
 EnvironmentUsageTag = "PoC"
 OwnerTag            = "DF"
-ProvisioningDateTag = "20190307"
+ProvisioningDateTag = "20190315"

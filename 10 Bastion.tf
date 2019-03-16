@@ -127,7 +127,6 @@ module "BastionVM" {
   VMLocation          = "${var.AzureRegion}"
   VMRG                = "${module.ResourceGroupBastion.Name}"
   VMNICid             = ["${module.BastionNIC.Ids}"]
-  WithDataDisk        = "false"
   VMAdminPassword     = "${var.VMAdminPassword}"
   VMPublisherName     = "${lookup(var.PublisherName, 2)}"
   VMOffer             = "${lookup(var.Offer, 2)}"
