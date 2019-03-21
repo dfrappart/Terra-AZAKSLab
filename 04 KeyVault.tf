@@ -6,6 +6,17 @@
 # keyvault Creation
 ######################################################################
 
+#Keyvault Random prefix
+module "KeyVaultRandomprefix" {
+    #Module source
+    source = "github.com/dfrappart/Terra-AZModuletest//Modules//00 RandomString/"
+
+    #Module variables
+    stringlenght        = "5"
+    stringspecial       = "false"
+    stringupper         = "false"
+    
+}
 
 
 #keyvault creation
@@ -16,7 +27,7 @@ module "KeyVault" {
   source = "github.com/dfrappart/Terra-AZModuletest//Modules//27 Keyvault"
 
   #Module variables
-  KeyVaultName            = "hubspokekeyvaultdfr"
+  KeyVaultName            = "${module.KeyVaultRandomprefix.Result}keyvault"
   KeyVaultRG              = "${module.ResourceGroupHubSpoke.Name}"
   KeyVaultObjectIDPolicy2 = "${var.AzureServicePrincipalInteractive}"
   KeyVaultObjectIDPolicy1 = "${var.AzureTFSP}"
@@ -117,6 +128,22 @@ module "StoringWinDefaultPWDInVault" {
   #Module variables
   PasswordName            = "DefaultWinPWD"
   PasswordValue           = "${var.VMAdminPassword}"
+  KeyVaultId              = "${module.KeyVault.Id}"
+  EnvironmentTag          = "${var.EnvironmentTag}"
+  EnvironmentUsageTag     = "${var.EnvironmentUsageTag}"
+  OwnerTag                = "${var.OwnerTag}"
+  ProvisioningDateTag     = "${var.ProvisioningDateTag}"
+
+}
+
+module "StoringSSHPublicKeyInVault" {
+
+  #Module source
+  source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+
+  #Module variables
+  PasswordName            = "SSHPublicKey"
+  PasswordValue           = "${var.AzurePublicSSHKey}"
   KeyVaultId              = "${module.KeyVault.Id}"
   EnvironmentTag          = "${var.EnvironmentTag}"
   EnvironmentUsageTag     = "${var.EnvironmentUsageTag}"

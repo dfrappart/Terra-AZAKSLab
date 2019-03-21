@@ -1,3 +1,7 @@
+
+
+/*
+
 provider "kubernetes" {
     host                        = "${module.AKSClus.KubeAdminCFG_HostName}"
     #username                    = "${module.AKSClus.KubeAdminCFG_UserName}"

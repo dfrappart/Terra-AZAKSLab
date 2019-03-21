@@ -6,24 +6,6 @@
 # Bastion host
 ######################################################################
 
-#Creating Bastion host Application Security Group
-
-# Creating the ResourceGroup
-
-module "ResourceGroupBastion" {
-  #Module Location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//01 ResourceGroup/"
-
-  #Module variable
-  RGName              = "${var.RGBastionName}"
-  RGLocation          = "${var.AzureRegion}"
-  EnvironmentTag      = "${var.EnvironmentTag}"
-  EnvironmentUsageTag = "${var.EnvironmentUsageTag}"
-  OwnerTag            = "${var.OwnerTag}"
-  ProvisioningDateTag = "${var.ProvisioningDateTag}"
-
-}
-
 #Creating ASGs
 
 module "BastionASG" {

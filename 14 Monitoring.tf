@@ -4,7 +4,7 @@
 
 #Creating a log analytics workspace
 
-module "AKSRandomSuffix" {
+module "AKSWSRandomSuffix" {
     #Module source
     source = "github.com/dfrappart/Terra-AZModuletest//Modules//00 RandomString/"
 
@@ -20,9 +20,9 @@ module "AKSWorkspace" {
     source = "github.com/dfrappart/Terra-AZModuletest//Modules//45 Log analytics workspace/"
 
     #Module variables
-    LAWName             = "${var.AKSWorkspaceName}${module.AKSRandomSuffix.Result}"
+    LAWName             = "${var.AKSWorkspaceName}${module.AKSWSRandomSuffix.Result}"
     LAWLocation         = "${var.AzureRegion}"
-    LAWRGName           = "${module.ResourceGroupAKS.Name}"
+    LAWRGName           = "${module.ResourceGroupHubSpoke.Name}"
     LAWLocation         = "${var.AzureRegion}"
     EnvironmentTag      = "${var.EnvironmentTag}"
     EnvironmentUsageTag = "${var.EnvironmentUsageTag}"
@@ -41,7 +41,7 @@ module "AKSLASol" {
     #Module variables
     LASolName        = "${var.LogAnalyticsSolutionName}"
     LASolLocation    = "${var.AzureRegion}"
-    LASolRGName      = "${module.ResourceGroupAKS.Name}"
+    LASolRGName      = "${module.ResourceGroupHubSpoke.Name}"
     LAWId            = "${module.AKSWorkspace.Id}"
     LAWName          = "${module.AKSWorkspace.Name}"
     LASolPublisher   = "${var.LogAnalyticsSolutionPublisher}"

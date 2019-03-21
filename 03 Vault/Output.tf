@@ -16,7 +16,7 @@ output "ResourceGroup1_Id" {
 ######################################################
 # Resource group Bastion info Output
 
-output "ResourceGroup2_Name" {
+output "ResourceGroup2_nName" {
   value = "${module.ResourceGroupBastion.Name}"
 }
 
@@ -24,7 +24,7 @@ output "ResourceGroup2_Id" {
   value = "${module.ResourceGroupBastion.Id}"
 }
 
-/*
+
 ######################################################
 # Resource group Bastion info Output
 
@@ -36,7 +36,7 @@ output "ResourceGroup3_Id" {
   value = "${module.ResourceGroupAKS.Id}"
 }
 
-*/
+
 ######################################################
 # vNet Hub info Output
 
@@ -282,12 +282,8 @@ output "VNet3_Subnet3_AddressPrefix" {
 ######################################################
 #Created Azure Keyvault
 
-output "KeyVault_Id" {
-  value = "${module.KeyVault.Id}"
-}
-
 output "KeyVault_Name" {
-  value = "${module.KeyVault.Name}"
+  value = "${module.KeyVault.Id}"
 }
 
 output "KeyVault_Uri" {
@@ -305,60 +301,6 @@ output "KeyVault_enabled_for_disk_encryption" {
 
 output "KeyVault_enabled_for_template_deployment" {
   value = "${module.KeyVault.KeyVault_enabled_for_template_deployment}"
-}
-
-
-######################################################
-#workspace analytics output
-
-output "AKSWorkspace_Name" {
-  value = "${module.AKSWorkspace.Name}"
-
-}
-
-
-output "AKSWorkspace_Location" {
-  value = "${module.AKSWorkspace.Location}"
-
-}
-
-output "AKSWorkspace_RG" {
-  value = "${module.AKSWorkspace.RG}"
-
-}
-
-output "AKSWorkspace_Sku" {
-  value = "${module.AKSWorkspace.Sku}"
-
-}
-
-output "AKSWorkspace_Id" {
-  value = "${module.AKSWorkspace.Id}"
-
-}
-
-output "AKSWorkspace_PSK" {
-  sensitive = true
-  value = "${module.AKSWorkspace.PSK}"
-
-}
-
-output "AKSWorkspace_SSK" {
-  sensitive = true
-  value = "${module.AKSWorkspace.SSK}"
-
-}
-
-output "AKSWorkspace_WSId" {
-
-  value = "${module.AKSWorkspace.WSId}"
-
-}
-
-output "AKSWorkspace_PortalUrl" {
-
-  value = "${module.AKSWorkspace.PortalUrl}"
-
 }
 
 ######################################################

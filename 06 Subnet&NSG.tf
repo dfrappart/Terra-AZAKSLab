@@ -41,6 +41,20 @@ module "Bastion_Subnet" {
 
 }
 
+/*
+module "Bastion_NSG_Subnet_Assocation" {
+  #Module location
+  source = "github.com/dfrappart/Terra-AZModuletest//Modules//07-1 NSG Association"
+
+  #Module variable
+  SubnetId            = "${module.Bastion_Subnet.Id}"
+  NSGId               = "${module.NSG_Bastion_Subnet.Id}"
+
+
+}
+
+*/
+
 ######################################################################
 # Hub ShareSVC_Subnet
 ######################################################################
@@ -77,6 +91,21 @@ module "ShareSVC_Subnet" {
   NSGid               = "${module.NSG_ShareSVC_Subnet.Id}"
 
 }
+
+/*
+
+module "ShareSVC_NSG_Subnet_Assocation" {
+  #Module location
+  source = "github.com/dfrappart/Terra-AZModuletest//Modules//07-1 NSG Association"
+
+  #Module variable
+  SubnetId            = "${module.ShareSVC_Subnet.Id}"
+  NSGId               = "${module.NSG_ShareSVC_Subnet.Id}"
+
+
+}
+
+*/
 
 ######################################################################
 # Hub Firewall Subnet
@@ -177,6 +206,20 @@ module "FE_Subnet" {
 
 }
 
+/*
+module "FE_NSG_Subnet_Assocation" {
+  #Module location
+  source = "github.com/dfrappart/Terra-AZModuletest//Modules//07-1 NSG Association"
+
+  #Module variable
+  SubnetId            = "${module.NSG_FE_Subnet.Id}"
+  NSGId               = "${module.FE_Subnet.Id}"
+
+
+}
+
+*/
+
 ######################################################################
 # Spoke 2 BE Subnet
 ######################################################################
@@ -215,6 +258,21 @@ module "BE_Subnet" {
 
 }
 
+/*
+
+module "BE_NSG_Subnet_Assocation" {
+  #Module location
+  source = "github.com/dfrappart/Terra-AZModuletest//Modules//07-1 NSG Association"
+
+  #Module variable
+  SubnetId            = "${module.NSG_BE_Subnet.Id}"
+  NSGId               = "${module.BE_Subnet.Id}"
+
+
+}
+
+*/
+
 ######################################################################
 # Spoke 2 Application Gateway Subnet
 ######################################################################
@@ -251,3 +309,17 @@ module "AppGW_Subnet" {
   NSGid               = "${module.NSG_AppGW_Subnet.Id}"
 
 }
+
+/*
+module "AppGW_NSG_Subnet_Assocation" {
+  #Module location
+  source = "github.com/dfrappart/Terra-AZModuletest//Modules//07-1 NSG Association"
+
+  #Module variable
+  SubnetId            = "${module.NSG_AppGW_Subnet.Id}"
+  NSGId               = "${module.AppGW_Subnet.Id}"
+
+
+}
+
+*/
