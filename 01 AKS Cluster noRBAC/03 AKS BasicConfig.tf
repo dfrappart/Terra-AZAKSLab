@@ -1,64 +1,16 @@
 
 
-/*
+
 
 provider "kubernetes" {
-    host                        = "${module.AKSClus.KubeAdminCFG_HostName}"
-    #username                    = "${module.AKSClus.KubeAdminCFG_UserName}"
-    #password                    = "${module.AKSClus.KubeAdminCFG_Password}"
-    client_certificate          = "${base64decode(module.AKSClus.KubeAdminCFG_ClientCertificate)}"
-    client_key                  = "${base64decode(module.AKSClus.KubeAdminCFG_ClientKey)}"
-    cluster_ca_certificate      = "${base64decode(module.AKSClus.KubeAdminCFG_ClusCACert)}"
+    host                        = "${module.AKSClusNoRbac.KubeCFG_HostName}"
+    client_certificate          = "${base64decode(module.AKSClusNoRbac.KubeCFG_ClientCertificate)}"
+    client_key                  = "${base64decode(module.AKSClusNoRbac.KubeCFG_ClientKey)}"
+    cluster_ca_certificate      = "${base64decode(module.AKSClusNoRbac.KubeCFG_ClusCACert)}"
 }
 
 
-/*
-resource "kubernetes_cluster_role" "terra_clusteradmin" {
-    metadata {
-        name = "terracreatedclusterrole"
-        annotations {
-            name = "terracreatedclusterrole"
-            usage = "foradminclusterrole"
-        }
-        labels {
-            name = "terracreatedclusterrole"
-            usage = "foradminclusterrole" 
 
-        }
-
-    }
-
-
-    rule {
-        api_groups = ["*"]
-        resource_names = [""]
-        resources =  ["ResourceAll"]
-        verbs = ["VerbAll"]
-
-
-    }
-
-
-}
-
-resource "kubernetes_cluster_role_binding" "terra_clusteradminbinding" {
-    metadata {
-        name = "terracreatedclusterrole"
-    }
-
-    role_ref {
-        api_group = "rbac.authorization.k8s.io"
-        kind      = "ClusterRole"
-        name      = "terracreatedclusterrole"
-    }
-
-    subject {
-        api_group   = "rbac.authorization.k8s.io"
-        kind        = "Group"
-        name        = "546e2d3b-450e-4049-8f9c-423e1da3444c"
-
-    }
-}
 
 resource "kubernetes_namespace" "terra_dev_namespace" {
     metadata {
@@ -72,7 +24,7 @@ resource "kubernetes_namespace" "terra_dev_namespace" {
             namespacelabel = "testnamespace_label"
         }
 
-        name = "terra-namespace"
+        name = "terra-dev-namespace"
     }
 }
 
@@ -155,4 +107,3 @@ resource "kubernetes_pod" "example" {
   }
 }
 
-*/

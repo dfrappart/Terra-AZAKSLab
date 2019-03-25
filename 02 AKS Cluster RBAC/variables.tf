@@ -117,3 +117,19 @@ variable "AKSDockerBridgeAddress" {
   type = "string"
   default = "172.17.0.1/16"
 }
+
+#######################################################################
+#Variable for kube object creation
+
+
+#ref for AAD Group, by object id
+variable "AKSClusterAdminGroup" {
+  type = "string"
+  default = "546e2d3b-450e-4049-8f9c-423e1da3444c"
+}
+
+#ref for AAD Group, by object id
+variable "AKSClusterAdminUSer" {
+  type = "string"
+  default = "david@teknews.cloud"
+}

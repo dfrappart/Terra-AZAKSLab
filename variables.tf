@@ -187,6 +187,26 @@ variable "LogAnalyticsSolutionProductName" {
 
 }
 
+#ACR variables
+
+variable "ACRAdminAccountEnabled" {
+  type = "string"
+  default = false
+  description = "The variable determining if the ACR account is enabled or not"
+}
+
+variable "ACRSku" {
+  type = "string"
+  default = "Premium"
+  description = "The sku for the Azure container registry, allowed values are Classic, Basic, Standard and Premium"
+}
+
+variable "ACRReplicationList" {
+  type = "list"
+  default = ["francecentral","northeurope"]
+  description = "The list of region in which the container registry is replicated"
+}
+
 #Tags definition
 
 variable "EnvironmentTag" {

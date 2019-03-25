@@ -7,7 +7,7 @@ module "AKSClusterRandomPrefix" {
     source = "github.com/dfrappart/Terra-AZModuletest//Modules//00 RandomString/"
 
     #Module variables
-    stringlenght        = "5"
+    stringlenght        = "4"
     stringspecial       = "false"
     stringupper         = "false"
     

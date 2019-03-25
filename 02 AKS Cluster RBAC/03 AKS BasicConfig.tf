@@ -1,6 +1,6 @@
 
 
-/*
+
 
 provider "kubernetes" {
     host                        = "${module.AKSClus.KubeAdminCFG_HostName}"
@@ -11,6 +11,51 @@ provider "kubernetes" {
     cluster_ca_certificate      = "${base64decode(module.AKSClus.KubeAdminCFG_ClusCACert)}"
 }
 
+
+##################################################################
+# associate user & groups to cluster admin role
+
+resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_user" {
+
+    metadata {
+        name = "terracreated-clusteradminrole-binding-user"
+    }
+
+    role_ref {
+        api_group = "rbac.authorization.k8s.io"
+        kind      = "ClusterRole"
+        name      = "cluster-admin"
+    }
+
+    subject {
+        api_group   = "rbac.authorization.k8s.io"
+        kind        = "User"
+        name        = "${var.AKSClusterAdminUSer}"
+
+    }
+
+}
+
+resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_group" {
+
+    metadata {
+        name = "terracreated-clusteradmin-role-binding-group"
+    }
+
+    role_ref {
+        api_group = "rbac.authorization.k8s.io"
+        kind      = "ClusterRole"
+        name      = "cluster-admin"
+    }
+
+    subject {
+        api_group   = "rbac.authorization.k8s.io"
+        kind        = "Group"
+        name        = "${var.AKSClusterAdminGroup}"
+
+    }
+
+}
 
 /*
 resource "kubernetes_cluster_role" "terra_clusteradmin" {
@@ -41,24 +86,9 @@ resource "kubernetes_cluster_role" "terra_clusteradmin" {
 
 }
 
-resource "kubernetes_cluster_role_binding" "terra_clusteradminbinding" {
-    metadata {
-        name = "terracreatedclusterrole"
-    }
+*/
 
-    role_ref {
-        api_group = "rbac.authorization.k8s.io"
-        kind      = "ClusterRole"
-        name      = "terracreatedclusterrole"
-    }
 
-    subject {
-        api_group   = "rbac.authorization.k8s.io"
-        kind        = "Group"
-        name        = "546e2d3b-450e-4049-8f9c-423e1da3444c"
-
-    }
-}
 
 resource "kubernetes_namespace" "terra_dev_namespace" {
     metadata {
@@ -72,9 +102,11 @@ resource "kubernetes_namespace" "terra_dev_namespace" {
             namespacelabel = "testnamespace_label"
         }
 
-        name = "terra-namespace"
+        name = "terra-dev-namespace"
     }
 }
+
+/*
 
 resource "kubernetes_deployment" "example" {
   metadata {
