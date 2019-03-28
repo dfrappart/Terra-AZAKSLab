@@ -14,7 +14,7 @@ module "DiagStorageAccount" {
     source = "github.com/dfrappart/Terra-AZModuletest//Modules//03 StorageAccountGP"
 
     #Module variable
-    StorageAccountName          = "stoa${var.EnvironmentTag}log"
+    StorageAccountName          = "${terraform.workspace == "default" ? "stoa${var.EnvironmentTag}log" : "stoa${var.EnvironmentTag}logdev"}"
     RGName                      = "${module.ResourceGroupHubSpoke.Name}"
     StorageAccountLocation      = "${var.AzureRegion}"
     StorageAccountTier          = "${lookup(var.storageaccounttier, 0)}"

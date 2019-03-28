@@ -1,6 +1,6 @@
 
 
-
+/*
 
 provider "kubernetes" {
     host                        = "${module.AKSClus.KubeAdminCFG_HostName}"
@@ -88,7 +88,7 @@ resource "kubernetes_cluster_role" "terra_clusteradmin" {
 
 */
 
-
+/*
 
 resource "kubernetes_namespace" "terra_dev_namespace" {
     metadata {
@@ -188,3 +188,4 @@ resource "kubernetes_pod" "example" {
 }
 
 */
+

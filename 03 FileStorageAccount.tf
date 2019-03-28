@@ -14,7 +14,7 @@ module "FileStorageAccount" {
     source = "github.com/dfrappart/Terra-AZModuletest//Modules//03 StorageAccountGP"
 
     #Module variable
-    StorageAccountName          = "stoa${var.EnvironmentTag}file"
+    StorageAccountName          = "${terraform.workspace == "default" ? "stoa${var.EnvironmentTag}file" : "stoa${var.EnvironmentTag}filedev"}"
     RGName                      = "${module.ResourceGroupHubSpoke.Name}"
     StorageAccountLocation      = "${var.AzureRegion}"
     StorageAccountTier          = "${lookup(var.storageaccounttier, 0)}"

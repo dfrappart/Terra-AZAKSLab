@@ -35,12 +35,15 @@ variable "AKSVNet" {
 variable "AKSSubnet" {
   type = "string"
 }
-
+/*
 #Variable defining the key vault name
+#not used, use the remote state as data source instead
 
 variable "KeyVaultName" {
   type = "string"
 }
+*/
+
 
 #Variable defining the keyvault secret  for the AKS SP App Id
 
@@ -79,10 +82,76 @@ variable "KeyVault_SSHPublicKey" {
 }
 
 #Variable defining the Log analytics workspace for AKS
-
+/*
+#not used, use the remote state as data source instead
 variable "AKSWorkspaceName" {
   type = "string"
 }
+*/
+
+#Variable defining AKS Cluster
+
+variable "AKSNodeCount" {
+  type = "string"
+  default = "3"
+  description = "The initial number of nodes"
+}
+
+variable "AKSNodeInstanceType" {
+  type = "string"
+  default = "Standard_DS2_v2"
+  description = "The instance type for the nodes"
+}
+
+variable "AKSNodeOSType" {
+  type = "string"
+  default = "Linux"
+  description = "The OS on the nodes"
+}
+
+variable "AKSNodeOSDiskSize" {
+  type = "string"
+  default = "30"
+  description = "The OS disk size"
+}
+
+variable "AKSMaxPods" {
+  type = "string"
+  default = "100"
+  description = "The maximum number of pods per hosts"
+}
+
+
+variable "KubeVersion" {
+  type = "string"
+  default = "1.12.5"
+}
+
+variable "AKSDNSSVCIPModfier" {
+  type = "string"
+  default = "10"
+}
+
+variable "AKSDockerBridgeCIDR" {
+  type = "string"
+  default = "172.17.0.1/16"
+}
+
+variable "AKSSVCCIDR" {
+  type = "string"
+  default = "172.19.0.0/16"
+}
+
+variable "IshttproutingEnabled" {
+  type = "string"
+  default = true
+}
+
+variable "AKSAdminName" {
+  type = "string"
+  default = "AKSAdmin"
+}
+
 
 #Variable defining the AKS Cluster Name
 
