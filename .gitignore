@@ -11,4 +11,6 @@ terraform.tfstate.backup
 *.tfstate*
 .terraform/
 EventDetails/
+crash.log
+/K8SResources
 

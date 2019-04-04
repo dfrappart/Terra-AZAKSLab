@@ -50,11 +50,11 @@ module "AKSClus" {
 
 */
 
-#Creating the AKS Cluster without RBAC Enabled and AAD integration
+#Creating the AKS Cluster with RBAC Enabled and AAD integration
 
 resource "azurerm_kubernetes_cluster" "AKSwRBAC" {
 
-  count               = "${terraform.workspace == "default" ? 1 : 0}"
+  count               = "${terraform.workspace == "Prod" ? 1 : 0}"
   name                = "${var.AKSClusterwithRBACName}"
   location            = "${var.AzureRegion}"
   resource_group_name = "${var.RGAKSName}"
@@ -104,7 +104,7 @@ resource "azurerm_kubernetes_cluster" "AKSwRBAC" {
 
   network_profile {
     network_plugin        = "azure"
-    network_policy        = "calico"
+    #network_policy        = "calico"
     dns_service_ip        = "${cidrhost(var.AKSSVCCIDR, var.AKSDNSSVCIPModfier)}"
     docker_bridge_cidr    = "${var.AKSDockerBridgeCIDR}"
     service_cidr          = "${var.AKSSVCCIDR}"
@@ -132,11 +132,11 @@ resource "azurerm_kubernetes_cluster" "AKSwRBAC" {
   }
 }
 
-
+#Creating the AKS Cluster without RBAC Enabled and AAD integration
 
 resource "azurerm_kubernetes_cluster" "AKSnoRBAC" {
 
-  count               = "${terraform.workspace != "default" ? 1 : 0}"
+  count               = "${terraform.workspace == "Dev" ? 1 : 0}"
   name                = "${var.AKSClusterwithRBACName}"
   location            = "${var.AzureRegion}"
   resource_group_name = "${var.RGAKSName}"
@@ -186,7 +186,7 @@ resource "azurerm_kubernetes_cluster" "AKSnoRBAC" {
 
   network_profile {
     network_plugin        = "azure"
-    network_policy        = "calico"
+    #network_policy        = "calico"
     dns_service_ip        = "${cidrhost(var.AKSSVCCIDR, var.AKSDNSSVCIPModfier)}"
     docker_bridge_cidr    = "${var.AKSDockerBridgeCIDR}"
     service_cidr          = "${var.AKSSVCCIDR}"
@@ -214,3 +214,28 @@ resource "azurerm_kubernetes_cluster" "AKSnoRBAC" {
     ProvisioningDate  = "${var.ProvisioningDateTag}"
   }
 }
+
+
+data "template_file" "templateakswnetpol" {
+  template = "${file("./Templates/templateakswnetpolw.json")}"
+}
+
+
+
+#Creating the AKS Cluster with RBAC Enabled, AAD Integration and Netpol Calico
+/*
+resource "azurerm_template_deployment" "Template-AKSwNetPol" {
+  count = "${terraform.workspace == "Prod" ? 1 : 0}"
+  name                = "azureakswnetpol"
+  resource_group_name = "${var.RGAKSName}"
+
+  template_body = "${data.template_file.templateAZFW.rendered}"
+
+  parameters {
+
+  }
+
+  deployment_mode = "Incremental"
+}
+
+*/
