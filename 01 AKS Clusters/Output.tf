@@ -2,7 +2,7 @@
 # This file defines which value are sent to output
 ######################################################
 
-/*
+
 
 ######################################################
 #Created AKS Output
@@ -75,12 +75,19 @@ output "AKSClusterNodeRG" {
   value = "${module.AKSClus.NodeRG}"
 }
 
-*/
 
+
+/*
 output "DevKeyvaultName" {
   value = "${data.terraform_remote_state.WSDev.KeyVault_Name}"
 }
 
 output "KeyvaultName" {
-  value = "${data.terraform_remote_state.WSdefault.KeyVault_Name}"
+  value = "${data.terraform_remote_state.WSProd.KeyVault_Name}"
+}
+
+*/
+
+output "KeyvaultName" {
+  value = "${data.terraform_remote_state.WS.KeyVault_Name}"
 }

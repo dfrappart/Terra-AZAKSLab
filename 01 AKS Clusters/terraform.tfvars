@@ -14,7 +14,7 @@ KeyVault_AKS_SRVAppId       = "AKSAADAppServerId"
 KeyVault_AKS_SRVAppSecret   = "AKSAADAppServerSecret"
 KeyVault_AKS_CliAppId       = "AKSAADAppClientId"
 KeyVault_SSHPublicKey       = "SSHPublicKey"
-AKSClusterwithRBACName      = "AKSLabClusterwithRBAC"
+AKSClus                     = "AKSLabClusterwithRBAC"
 AKSNodeCount                = "3"
 #AKSWorkspaceName            = "AKSWorkspacehtdei"
 

@@ -5,7 +5,7 @@
 ######################################################################
 # Bastion host
 ######################################################################
-
+/*
 #Creating ASGs
 
 module "BastionASG" {
@@ -69,7 +69,7 @@ module "BastionPIP" {
   source = "github.com/dfrappart/Terra-AZModuletest//Modules//10 PublicIP"
 
   #Module variables
-  PublicIPName        = "${terraform.workspace == "default" ? "bastionpip" : "bastionpipdev"}"
+  PublicIPName        = "${terraform.workspace == "Prod" ? "bastionpip" : "bastionpipdev"}"
   PublicIPLocation    = "${var.AzureRegion}"
   RGName              = "${module.ResourceGroupBastion.Name}"
   IsZoneRedundant     = "true"
@@ -122,4 +122,4 @@ module "BastionVM" {
   ProvisioningDateTag = "${var.ProvisioningDateTag}"
 }
 
-
+*/

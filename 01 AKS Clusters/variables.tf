@@ -155,7 +155,7 @@ variable "AKSAdminName" {
 
 #Variable defining the AKS Cluster Name
 
-variable "AKSClusterwithRBACName" {
+variable "AKSClus" {
   type = "string"
 }
 

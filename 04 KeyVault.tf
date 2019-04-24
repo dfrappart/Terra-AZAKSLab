@@ -15,6 +15,7 @@ module "KeyVaultRandomprefix" {
     stringlenght        = "5"
     stringspecial       = "false"
     stringupper         = "false"
+    stringnumber        = "false"
     
 }
 

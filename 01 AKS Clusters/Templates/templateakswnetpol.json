@@ -241,7 +241,8 @@
             "type": "array",
             "metadata": {
                 "description": "The authorized IP on the API Server"
-            }
+            },
+            "defaultValue": ["0.0.0.0/0"]
 
         }
     },

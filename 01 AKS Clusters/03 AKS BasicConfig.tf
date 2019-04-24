@@ -1,15 +1,11 @@
 
-
-/*
-
 provider "kubernetes" {
     host                        = "${module.AKSClus.KubeAdminCFG_HostName}"
-    #username                    = "${module.AKSClus.KubeAdminCFG_UserName}"
-    #password                    = "${module.AKSClus.KubeAdminCFG_Password}"
     client_certificate          = "${base64decode(module.AKSClus.KubeAdminCFG_ClientCertificate)}"
     client_key                  = "${base64decode(module.AKSClus.KubeAdminCFG_ClientKey)}"
     cluster_ca_certificate      = "${base64decode(module.AKSClus.KubeAdminCFG_ClusCACert)}"
 }
+
 
 
 ##################################################################
@@ -36,28 +32,10 @@ resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_
 
 }
 
-resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_group" {
+##################################################################
+# create custom role with full access on K8S
 
-    metadata {
-        name = "terracreated-clusteradmin-role-binding-group"
-    }
 
-    role_ref {
-        api_group = "rbac.authorization.k8s.io"
-        kind      = "ClusterRole"
-        name      = "cluster-admin"
-    }
-
-    subject {
-        api_group   = "rbac.authorization.k8s.io"
-        kind        = "Group"
-        name        = "${var.AKSClusterAdminGroup}"
-
-    }
-
-}
-
-/*
 resource "kubernetes_cluster_role" "terra_clusteradmin" {
     metadata {
         name = "terracreatedclusterrole"
@@ -86,15 +64,18 @@ resource "kubernetes_cluster_role" "terra_clusteradmin" {
 
 }
 
-*/
 
-/*
 
-resource "kubernetes_namespace" "terra_dev_namespace" {
+
+##################################################################
+# Create namespace test
+
+
+resource "kubernetes_namespace" "terra_test_namespace" {
     metadata {
         annotations {
-            name = "terra_dev_namespace"
-            usage = "for_dev_namespace"
+            name = "terra_test_namespace"
+            usage = "for_test_namespace"
         }
     
 
@@ -102,9 +83,105 @@ resource "kubernetes_namespace" "terra_dev_namespace" {
             namespacelabel = "testnamespace_label"
         }
 
-        name = "terra-dev-namespace"
+        name = "terra-test-namespace"
     }
 }
+
+
+
+##################################################################
+# Create role with full access on created namespace
+#Not necessary, use the built-in role admin in the following binding
+#not usre it works either :p
+
+
+resource "kubernetes_role" "terransadmin" {
+  metadata {
+    namespace = "terra-test-namespace"   #No interpolation on namespace resource object T_T
+    name = "terracreated-nsadmin"
+    labels {
+      test = "terracreatedrole"
+    }
+  }
+
+  rule {
+    api_groups = [""]
+    resources = ["*"]
+    verbs = ["*"]
+
+  }
+
+}
+
+
+
+##################################################################
+# bind namespace full admin role to AAD Group
+
+
+resource "kubernetes_role_binding" "terraadminnamspace" {
+  metadata {
+    name = "terransadminrolebinding"
+    namespace = "terra-test-namespace"
+
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind = "ClusterRole"
+    name = "admin"
+  }
+
+  subject {
+    kind = "Group"
+    name = "${var.AKSClusterAdminGroup}"
+    api_group = "rbac.authorization.k8s.io"
+  }
+}
+
+
+##################################################################
+# Create network policy to limit traffic inside the namespace
+
+resource "kubernetes_network_policy" "terranetpoltons" {
+  metadata {
+    name = "terranetpol-test"
+    namespace = "terra-test-namespace"
+
+  }
+
+  spec {
+    pod_selector {
+
+    }
+
+
+    ingress = [
+      {
+
+        from = [
+          {
+            namespace_selector {
+              match_labels = {
+                namespacelabel = "testnamespace_label"
+              }
+            }
+          }
+        ]
+      }
+    ]
+
+    egress = [{}]
+
+    policy_types = ["Ingress", "Egress"]
+    
+  }
+}
+
+
+
+##################################################################
+# Create K8S Resources
 
 /*
 
@@ -187,5 +264,6 @@ resource "kubernetes_pod" "example" {
   }
 }
 
-*/
 
+
+*/

@@ -19,14 +19,14 @@ module "AKSClusterRandomPrefix" {
 ######################################################################
 
 
-/*
+
 module "AKSClus" {
   #Module Location
   source = "github.com/dfrappart/Terra-AZModuletest//Modules//44-2 AKS ClusterwithRBAC/"
 
   #Module variable
   AKSRGName           = "${data.azurerm_resource_group.AKSRG.name}"
-  AKSClusName         = "${var.AKSClusterwithRBACName}"
+  AKSClusName         = "${var.AKSClus}"
   AKSprefix           = "${module.AKSClusterRandomPrefix.Result}"
   AKSLocation         = "${var.AzureRegion}"
   AKSSubnetId         = "${data.azurerm_subnet.AKSwithRBACSubnet.id}"
@@ -48,19 +48,20 @@ module "AKSClus" {
 
 }
 
-*/
 
+
+/*
 #Creating the AKS Cluster with RBAC Enabled and AAD integration
 
 resource "azurerm_kubernetes_cluster" "AKSwRBAC" {
 
   count               = "${terraform.workspace == "Prod" ? 1 : 0}"
-  name                = "${var.AKSClusterwithRBACName}"
+  name                = "${var.AKSClus}"
   location            = "${var.AzureRegion}"
   resource_group_name = "${var.RGAKSName}"
   
   agent_pool_profile {
-  name                = "${var.AKSClusterwithRBACName}"
+  name                = "${var.AKSClus}"
     name              = "${lower(var.EnvironmentTag)}agcfg"
     count             = "${var.AKSNodeCount}" 
     vm_size           = "${var.AKSNodeInstanceType}" 
@@ -104,7 +105,7 @@ resource "azurerm_kubernetes_cluster" "AKSwRBAC" {
 
   network_profile {
     network_plugin        = "azure"
-    #network_policy        = "calico"
+    network_policy        = "calico"
     dns_service_ip        = "${cidrhost(var.AKSSVCCIDR, var.AKSDNSSVCIPModfier)}"
     docker_bridge_cidr    = "${var.AKSDockerBridgeCIDR}"
     service_cidr          = "${var.AKSSVCCIDR}"
@@ -132,17 +133,21 @@ resource "azurerm_kubernetes_cluster" "AKSwRBAC" {
   }
 }
 
+
+
+
+
 #Creating the AKS Cluster without RBAC Enabled and AAD integration
 
 resource "azurerm_kubernetes_cluster" "AKSnoRBAC" {
 
   count               = "${terraform.workspace == "Dev" ? 1 : 0}"
-  name                = "${var.AKSClusterwithRBACName}"
+  name                = "${var.AKSClus}"
   location            = "${var.AzureRegion}"
   resource_group_name = "${var.RGAKSName}"
   
   agent_pool_profile {
-  name                = "${var.AKSClusterwithRBACName}"
+  name                = "${var.AKSClus}"
     name              = "${lower(var.EnvironmentTag)}agcfg"
     count             = "${var.AKSNodeCount}" 
     vm_size           = "${var.AKSNodeInstanceType}" 
@@ -193,19 +198,7 @@ resource "azurerm_kubernetes_cluster" "AKSnoRBAC" {
 
   }
 
-/*
-  role_based_access_control {
-    enabled           = true
 
-    azure_active_directory {
-      client_app_id       = "${data.azurerm_key_vault_secret.AKS_AADClient_AppId.value}"
-      server_app_id       = "${data.azurerm_key_vault_secret.AKS_AADServer_AppID.value}"
-      server_app_secret   = "${data.azurerm_key_vault_secret.AKS_AADServer_AppSecret.value}"
-      tenant_id           = "${var.AzureTenantID}"
-    }
-
-  }
-*/
 
   tags {
     Environment       = "${var.EnvironmentTag}"
@@ -215,23 +208,60 @@ resource "azurerm_kubernetes_cluster" "AKSnoRBAC" {
   }
 }
 
+*/
 
+/*
 data "template_file" "templateakswnetpol" {
-  template = "${file("./Templates/templateakswnetpolw.json")}"
+  template = "${file("./Templates/templateakswnetpol.json")}"
 }
 
 
 
 #Creating the AKS Cluster with RBAC Enabled, AAD Integration and Netpol Calico
-/*
+
 resource "azurerm_template_deployment" "Template-AKSwNetPol" {
   count = "${terraform.workspace == "Prod" ? 1 : 0}"
   name                = "azureakswnetpol"
   resource_group_name = "${var.RGAKSName}"
 
-  template_body = "${data.template_file.templateAZFW.rendered}"
+  template_body = "${data.template_file.templateakswnetpol.rendered}"
 
   parameters {
+
+    AKSName               = "${var.AKSClus}"
+    AKSLocation           = "${var.AzureRegion}"
+    EnvironnmentTag       = "${var.EnvironmentTag}"
+    EnvironmentUsageTag   = "${var.EnvironmentUsageTag}"
+    OwnerTag              = "${var.OwnerTag}"
+    ProvisioningDateTag   = "${var.ProvisioningDateTag}"
+    KubeVersion           = "${var.KubeVersion}"
+    AKSDNSPrefix          = "${module.AKSClusterRandomPrefix.Result}"
+#    RBACStatus            = true
+#    PodSecurityStatus     = true
+#    NodeCount             = "3"
+#    NodeCountMin          = "1"
+#    NodeCountMax          = "6"
+    NodeSize              = "${var.AKSNodeInstanceType}"
+    AKSOSDiskSize         = "${var.AKSNodeOSDiskSize}"
+    AKSSubnetId           = "${data.azurerm_subnet.AKSwithRBACSubnet.id}"
+    AKSOSType             = "${var.AKSNodeOSType}"
+    AKSMaxPodNumber       = "${var.AKSMaxPods}"
+#    AKSAutoscalingStatus  = true
+    AKAgentPoolName       = "${lower(var.EnvironmentTag)}agcfg"
+    AKSAdminName          = "${var.AKSAdminName}"
+    AKSSSH                = "${data.azurerm_key_vault_secret.SSHPublicKey.value}"
+    AKSSPAppId            = "${data.azurerm_key_vault_secret.AKSSP_AppId.value}"
+    AKSSPAppSecret        = "${data.azurerm_key_vault_secret.AKSSP_AppSecret.value}"
+#    AKSCNI                = "azure"
+#    AKSPolicy             = "calico"
+    AKSSVCCidr            = "${var.AKSSVCCIDR}"
+    AKSDNSIP              = "${cidrhost(var.AKSSVCCIDR, var.AKSDNSSVCIPModfier)}"
+    AKSDockerBridgeCidr   = "${var.AKSDockerBridgeCIDR}"
+    AKSAADClientId        = "${data.azurerm_key_vault_secret.AKS_AADClient_AppId.value}"
+    AKSAADServerId        = "${data.azurerm_key_vault_secret.AKS_AADServer_AppID.value}"
+    AKSAADServerSecret    = "${data.azurerm_key_vault_secret.AKS_AADServer_AppSecret.value}"
+    AKSAADTenantId        = "${var.AzureTenantID}"
+    
 
   }
 
