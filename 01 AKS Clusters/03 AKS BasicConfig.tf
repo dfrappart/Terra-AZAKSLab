@@ -14,13 +14,13 @@ provider "kubernetes" {
 resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_user" {
 
     metadata {
-        name = "terracreated-clusteradminrole-binding-user"
+        name        = "terracreated-clusteradminrole-binding-user"
     }
 
     role_ref {
-        api_group = "rbac.authorization.k8s.io"
-        kind      = "ClusterRole"
-        name      = "cluster-admin"
+        api_group   = "rbac.authorization.k8s.io"
+        kind        = "ClusterRole"
+        name        = "cluster-admin"
     }
 
     subject {
@@ -34,18 +34,18 @@ resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_
 
 ##################################################################
 # create custom role with full access on K8S
-
+#Not used, built-in cluster-admin role is used instead
 
 resource "kubernetes_cluster_role" "terra_clusteradmin" {
     metadata {
-        name = "terracreatedclusterrole"
+        name          = "terracreatedclusterrole"
         annotations {
-            name = "terracreatedclusterrole"
-            usage = "foradminclusterrole"
+            name      = "terracreatedclusterrole"
+            usage     = "foradminclusterrole"
         }
         labels {
-            name = "terracreatedclusterrole"
-            usage = "foradminclusterrole" 
+            name      = "terracreatedclusterrole"
+            usage     = "foradminclusterrole" 
 
         }
 
@@ -53,10 +53,10 @@ resource "kubernetes_cluster_role" "terra_clusteradmin" {
 
 
     rule {
-        api_groups = ["*"]
-        resource_names = [""]
-        resources =  ["ResourceAll"]
-        verbs = ["VerbAll"]
+        api_groups      = ["*"]
+        resource_names  = [""]
+        resources       =  ["ResourceAll"]
+        verbs           = ["VerbAll"]
 
 
     }
@@ -74,8 +74,8 @@ resource "kubernetes_cluster_role" "terra_clusteradmin" {
 resource "kubernetes_namespace" "terra_test_namespace" {
     metadata {
         annotations {
-            name = "terra_test_namespace"
-            usage = "for_test_namespace"
+            name    = "terra_test_namespace"
+            usage   = "for_test_namespace"
         }
     
 
@@ -83,7 +83,7 @@ resource "kubernetes_namespace" "terra_test_namespace" {
             namespacelabel = "testnamespace_label"
         }
 
-        name = "terra-test-namespace"
+        name        = "terra-test-namespace"
     }
 }
 
@@ -97,17 +97,17 @@ resource "kubernetes_namespace" "terra_test_namespace" {
 
 resource "kubernetes_role" "terransadmin" {
   metadata {
-    namespace = "terra-test-namespace"   #No interpolation on namespace resource object T_T
-    name = "terracreated-nsadmin"
+    namespace   = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
+    name        = "terracreated-nsadmin"
     labels {
-      test = "terracreatedrole"
+      test      = "terracreatedrole"
     }
   }
 
   rule {
-    api_groups = [""]
-    resources = ["*"]
-    verbs = ["*"]
+    api_groups  = [""]
+    resources   = ["*"]
+    verbs       = ["*"]
 
   }
 
@@ -121,76 +121,130 @@ resource "kubernetes_role" "terransadmin" {
 
 resource "kubernetes_role_binding" "terraadminnamspace" {
   metadata {
-    name = "terransadminrolebinding"
-    namespace = "terra-test-namespace"
+    name      = "terransadminrolebinding"
+    namespace = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
 
   }
 
   role_ref {
     api_group = "rbac.authorization.k8s.io"
-    kind = "ClusterRole"
-    name = "admin"
+    kind      = "ClusterRole"
+    name      = "admin"
   }
 
   subject {
-    kind = "Group"
-    name = "${var.AKSClusterAdminGroup}"
+    kind      = "Group"
+    name      = "${var.AKSClusterAdminGroup}"
     api_group = "rbac.authorization.k8s.io"
   }
 }
 
 
 ##################################################################
-# Create network policy to limit traffic inside the namespace
+# Network policy
+/*
+#Default network policy deny all in namespace terra-test-namespace ingress
 
-resource "kubernetes_network_policy" "terranetpoltons" {
+resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_terra-test-namespace" {
   metadata {
-    name = "terranetpol-test"
-    namespace = "terra-test-namespace"
-
+    name        = "defaultnp-denyall-in"
+    namespace   = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
   }
 
   spec {
-    pod_selector {
+    pod_selector {}
+    ingress = []
+    policy_types = ["Ingress"]
 
-    }
-
-
-    ingress = [
-      {
-
-        from = [
-          {
-            namespace_selector {
-              match_labels = {
-                namespacelabel = "testnamespace_label"
-              }
-            }
-          }
-        ]
-      }
-    ]
-
-    egress = [{}]
-
-    policy_types = ["Ingress", "Egress"]
-    
   }
+
+  
+
+
 }
+
+#Default network policy deny all in namespace terra-test-namespace egress
+
+resource "kubernetes_network_policy" "terra_defaultnp_denyalleg_ns_terra-test-namespace" {
+  metadata {
+    name        = "defaultnp-denyall-eg"
+    namespace   = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
+  }
+
+  spec {
+    pod_selector {}
+    egress = []
+    policy_types = ["Egress"]
+
+  }
+
+  
+
+
+}
+
+
+*/
 
 
 
 ##################################################################
 # Create K8S Resources
-
 /*
 
-resource "kubernetes_deployment" "example" {
+#Create test pod nginx
+
+resource "kubernetes_pod" "testnginx" {
   metadata {
-    name = "terraform-example"
+    name = "testnginxpod"
     labels {
-      test = "MyExampleApp"
+      app = "testnginxpod"
     }
+    namespace = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
+  }
+
+  spec {
+    container {
+      image = "nginx:1.7.9"
+      name  = "testnginxpod"
+    }
+  }
+}
+
+
+#Create Service exposing test pod nginx
+
+resource "kubernetes_service" "testnginxsvc" {
+  metadata {
+    name = "testnginxsvc"
+    namespace = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
+  }
+  spec {
+    selector {
+      app = "${kubernetes_pod.testnginx.metadata.0.labels.app}"
+    }
+    session_affinity = "ClientIP"
+    port {
+      port = 8080
+      target_port = 80
+    }
+
+    type = "LoadBalancer"
+  }
+}
+
+
+
+#Create test deployment
+
+
+resource "kubernetes_deployment" "testnginxdeployment" {
+  metadata {
+    name = "testnginxdeployment"
+    labels {
+      app = "testnginxdeployment"
+    }
+    namespace = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
   }
 
   spec {
@@ -198,21 +252,21 @@ resource "kubernetes_deployment" "example" {
 
     selector {
       match_labels {
-        test = "MyExampleApp"
+        app = "testnginxdeployment"
       }
     }
 
     template {
       metadata {
         labels {
-          test = "MyExampleApp"
+          app = "testnginxdeployment"
         }
       }
 
       spec {
         container {
           image = "nginx:1.7.8"
-          name  = "example"
+          name  = "testnginxpoddeployment"
 
           resources{
             limits{
@@ -230,13 +284,17 @@ resource "kubernetes_deployment" "example" {
   }
 }
 
-resource "kubernetes_service" "example" {
+
+#Create Service exposing test deployment nginx
+
+resource "kubernetes_service" "testnginxsvc2" {
   metadata {
-    name = "terraform-example"
+    name = "testnginxsvc2"
+    namespace = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
   }
   spec {
     selector {
-      app = "${kubernetes_pod.example.metadata.0.labels.app}"
+      app = "${kubernetes_deployment.testnginxdeployment.metadata.0.labels.app}"
     }
     session_affinity = "ClientIP"
     port {
@@ -247,23 +305,5 @@ resource "kubernetes_service" "example" {
     type = "LoadBalancer"
   }
 }
-
-resource "kubernetes_pod" "example" {
-  metadata {
-    name = "terraform-example"
-    labels {
-      app = "MyApp"
-    }
-  }
-
-  spec {
-    container {
-      image = "nginx:1.7.9"
-      name  = "example"
-    }
-  }
-}
-
-
 
 */
