@@ -32,6 +32,7 @@ resource "kubernetes_deployment" "azure-vote-back" {
     selector {
       match_labels {
         app = "azure-vote-back"
+        #role = "back"
       }
     }
 
@@ -39,6 +40,7 @@ resource "kubernetes_deployment" "azure-vote-back" {
       metadata {
         labels {
           app = "azure-vote-back"
+          #role = "back"
         }
       }
 
@@ -81,6 +83,7 @@ resource "kubernetes_service" "azure-vote-back" {
   spec {
     selector {
       app = "${kubernetes_deployment.azure-vote-back.metadata.0.name}"
+      #role = "back" #"${kubernetes_deployment.azure-vote-back.spec.1.selector.0.match_labels.0.role}"
     }
 
     port {
@@ -107,6 +110,7 @@ resource "kubernetes_deployment" "azure-vote-front" {
     selector {
       match_labels {
         app = "azure-vote-front" 
+        #role = "front"
       }
     } 
 
@@ -114,6 +118,7 @@ resource "kubernetes_deployment" "azure-vote-front" {
       metadata {
         labels {
           app = "azure-vote-front"
+          #role = "front"
         }
       }
 
@@ -167,6 +172,7 @@ resource "kubernetes_service" "azure-vote-front" {
 
     selector {
       app = "${kubernetes_deployment.azure-vote-front.metadata.0.name}"
+      #role = "front" #"${kubernetes_deployment.azure-vote-front.spec.0.selector.0.match_labels.0.role}"
     }
 
     port {
@@ -176,5 +182,78 @@ resource "kubernetes_service" "azure-vote-front" {
 
   }
 }
+
+
+##################################################################
+# Network policy
+
+/*
+
+#Default network policy deny all in namespace terra-test-namespace ingress
+
+resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_terra-test-namespace" {
+  metadata {
+    name        = "defaultnp-denyall-in"
+    namespace   = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
+  }
+
+  spec {
+    pod_selector {}
+    ingress = []
+    policy_types = ["Ingress"]
+
+  }
+
+  
+
+
+}
+
+#Default network policy deny all in namespace terra-test-namespace egress
+
+resource "kubernetes_network_policy" "terra_defaultnp_denyalleg_ns_terra-test-namespace" {
+  metadata {
+    name        = "defaultnp-denyall-eg"
+    namespace   = "${kubernetes_namespace.azap_namespace.metadata.0.name}"
+  }
+
+  spec {
+    pod_selector {}
+    egress = []
+    policy_types = ["Egress"]
+
+  }
+
+  
+
+
+}
+
+#Network policy allowing external traffic on testnginxpod
+
+resource "kubernetes_network_policy" "Allow-External" {
+  metadata {
+    name = "allow-external"
+    namespace = "${kubernetes_namespace.azap_namespace.metadata.0.name}"
+
+  }
+
+  spec {
+    pod_selector {
+      match_labels {
+        app = "azure-vote"
+        role = "front"
+      }
+    }
+    ingress = [
+      {
+        from = []
+      }
+    ]
+    policy_types = ["Ingress"]
+
+  }
+}
+
 
 */

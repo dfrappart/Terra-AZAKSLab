@@ -23,7 +23,7 @@ module "ACRStorageAccount" {
 */
 
 #Random prefix for the ACR
-
+/*
 module "AKSWSRandomPrefix" {
     #Module source
     source = "github.com/dfrappart/Terra-AZModuletest//Modules//00 RandomString/"
@@ -56,3 +56,5 @@ module "AKSLabACR" {
 
 
 } 
+
+*/

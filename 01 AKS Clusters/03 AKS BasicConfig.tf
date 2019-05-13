@@ -33,41 +33,6 @@ resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_
 }
 
 ##################################################################
-# create custom role with full access on K8S
-#Not used, built-in cluster-admin role is used instead
-
-resource "kubernetes_cluster_role" "terra_clusteradmin" {
-    metadata {
-        name          = "terracreatedclusterrole"
-        annotations {
-            name      = "terracreatedclusterrole"
-            usage     = "foradminclusterrole"
-        }
-        labels {
-            name      = "terracreatedclusterrole"
-            usage     = "foradminclusterrole" 
-
-        }
-
-    }
-
-
-    rule {
-        api_groups      = ["*"]
-        resource_names  = [""]
-        resources       =  ["ResourceAll"]
-        verbs           = ["VerbAll"]
-
-
-    }
-
-
-}
-
-
-
-
-##################################################################
 # Create namespace test
 
 
@@ -93,7 +58,7 @@ resource "kubernetes_namespace" "terra_test_namespace" {
 # Create role with full access on created namespace
 #Not necessary, use the built-in role admin in the following binding
 #not usre it works either :p
-
+/*
 
 resource "kubernetes_role" "terransadmin" {
   metadata {
@@ -113,7 +78,7 @@ resource "kubernetes_role" "terransadmin" {
 
 }
 
-
+*/
 
 ##################################################################
 # bind namespace full admin role to AAD Group
@@ -140,57 +105,11 @@ resource "kubernetes_role_binding" "terraadminnamspace" {
 }
 
 
-##################################################################
-# Network policy
-/*
-#Default network policy deny all in namespace terra-test-namespace ingress
-
-resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_terra-test-namespace" {
-  metadata {
-    name        = "defaultnp-denyall-in"
-    namespace   = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
-  }
-
-  spec {
-    pod_selector {}
-    ingress = []
-    policy_types = ["Ingress"]
-
-  }
-
-  
-
-
-}
-
-#Default network policy deny all in namespace terra-test-namespace egress
-
-resource "kubernetes_network_policy" "terra_defaultnp_denyalleg_ns_terra-test-namespace" {
-  metadata {
-    name        = "defaultnp-denyall-eg"
-    namespace   = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
-  }
-
-  spec {
-    pod_selector {}
-    egress = []
-    policy_types = ["Egress"]
-
-  }
-
-  
-
-
-}
-
-
-*/
-
 
 
 ##################################################################
 # Create K8S Resources
-/*
+
 
 #Create test pod nginx
 
@@ -306,4 +225,4 @@ resource "kubernetes_service" "testnginxsvc2" {
   }
 }
 
-*/
+
