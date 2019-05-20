@@ -25,7 +25,7 @@ resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_terra-test-na
 
 resource "kubernetes_network_policy" "terra_defaultnp_denyallin_fromotherns" {
   metadata {
-    name        = "defaultnp_denyallin_fromotherns"
+    name        = "defaultnp-denyallin-fromotherns"
     namespace   = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
   }
 
