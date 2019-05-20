@@ -73,53 +73,38 @@ data "terraform_remote_state" "WSProd" {
 */
 
 data "azurerm_key_vault" "LabKeyVault" {
-    #name                    = "${terraform.workspace == "Prod" ? "${data.terraform_remote_state.WSProd.KeyVault_Name}" : "${data.terraform_remote_state.WSDev.KeyVault_Name}"}"
     name = "${data.terraform_remote_state.WS.KeyVault_Name}"
     resource_group_name     = "${data.azurerm_resource_group.InfraRG.name}"
 }
 
-/*
-data "azurerm_key_vault" "LabKeyVaultDev" {
-    #name                    = "${terraform.workspace == "Dev" ? "${data.terraform_remote_state.WSDev.KeyVault_Name}" : "${data.terraform_remote_state.WSProd.KeyVault_Name}"}"
-    name = "${data.terraform_remote_state.WS.KeyVault_Name}"
-    resource_group_name     = "${data.azurerm_resource_group.InfraRG.name}"
-}
-
-*/
 
 data "azurerm_key_vault_secret" "AKSSP_AppId" {
     name        = "${var.KeyVault_AKS_SP_AppId}"
-    #vault_uri   = "${terraform.workspace == "Prod" ? "${data.azurerm_key_vault.LabKeyVault.vault_uri}" : "${data.azurerm_key_vault.LabKeyVaultDev.vault_uri}"}"
     vault_uri = "${data.azurerm_key_vault.LabKeyVault.vault_uri}"
 }
 
 data "azurerm_key_vault_secret" "AKSSP_AppSecret" {
     name        = "${var.KeyVault_AKS_SP_AppSecret}"
-    #vault_uri   = "${terraform.workspace == "Prod" ? "${data.azurerm_key_vault.LabKeyVault.vault_uri}" : "${data.azurerm_key_vault.LabKeyVaultDev.vault_uri}"}"
     vault_uri = "${data.azurerm_key_vault.LabKeyVault.vault_uri}"
 }
 
 data "azurerm_key_vault_secret" "AKS_AADServer_AppID" {
     name        = "${var.KeyVault_AKS_SRVAppId}"
-    #vault_uri   = "${terraform.workspace == "Prod" ? "${data.azurerm_key_vault.LabKeyVault.vault_uri}" : "${data.azurerm_key_vault.LabKeyVaultDev.vault_uri}"}"
     vault_uri = "${data.azurerm_key_vault.LabKeyVault.vault_uri}"
 }
 
 data "azurerm_key_vault_secret" "AKS_AADServer_AppSecret" {
     name        = "${var.KeyVault_AKS_SRVAppSecret}"
-    #vault_uri   = "${terraform.workspace == "Prod" ? "${data.azurerm_key_vault.LabKeyVault.vault_uri}" : "${data.azurerm_key_vault.LabKeyVaultDev.vault_uri}"}"
     vault_uri = "${data.azurerm_key_vault.LabKeyVault.vault_uri}"
 }
 
 data "azurerm_key_vault_secret" "AKS_AADClient_AppId" {
     name        = "${var.KeyVault_AKS_CliAppId}"
-    #vault_uri   = "${terraform.workspace == "Prod" ? "${data.azurerm_key_vault.LabKeyVault.vault_uri}" : "${data.azurerm_key_vault.LabKeyVaultDev.vault_uri}"}"
     vault_uri = "${data.azurerm_key_vault.LabKeyVault.vault_uri}"
 }
 
 data "azurerm_key_vault_secret" "SSHPublicKey" {
     name        = "${var.KeyVault_SSHPublicKey}"
-    #vault_uri   = "${terraform.workspace == "Prod" ? "${data.azurerm_key_vault.LabKeyVault.vault_uri}" : "${data.azurerm_key_vault.LabKeyVaultDev.vault_uri}"}"
     vault_uri = "${data.azurerm_key_vault.LabKeyVault.vault_uri}"
 }
 
@@ -128,7 +113,6 @@ data "azurerm_key_vault_secret" "SSHPublicKey" {
 
 
 data "azurerm_log_analytics_workspace" "AKSLabWS" {
-    #name                    = "${terraform.workspace == "Prod" ? "${data.terraform_remote_state.WSProd.AKSWorkspace_Name}" : "${data.terraform_remote_state.WSDev.AKSWorkspace_Name}"}"
     name = "${data.terraform_remote_state.WS.AKSWorkspace_Name}"
     resource_group_name     = "${data.azurerm_resource_group.InfraRG.name}"
     
