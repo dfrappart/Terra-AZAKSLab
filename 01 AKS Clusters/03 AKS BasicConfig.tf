@@ -124,7 +124,7 @@ resource "kubernetes_pod" "testnginx" {
 
   spec {
     container {
-      image = "nginx:1.7.9"
+      image = "nginx:1.15.12"
       name  = "testnginxpod"
     }
   }
@@ -184,7 +184,7 @@ resource "kubernetes_deployment" "testnginxdeployment" {
 
       spec {
         container {
-          image = "nginx:1.7.8"
+          image = "nginx:1.15.12"
           name  = "testnginxpoddeployment"
 
           resources{
