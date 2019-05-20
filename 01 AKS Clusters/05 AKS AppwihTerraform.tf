@@ -1,6 +1,6 @@
 ##################################################################
 # Create K8S Resources
-/*
+
 #Create namespace for azure vote app
 resource "kubernetes_namespace" "azap_namespace" {
     metadata {
@@ -23,16 +23,15 @@ resource "kubernetes_namespace" "azap_namespace" {
 resource "kubernetes_deployment" "azure-vote-back" {
   metadata {
     name = "azure-vote-back"
-    namespace = "${kubernetes_namespace.azap_namespace.metadata.0.name}"
+    namespace = "azap-namespace"
   }
 
   spec {
     replicas = 1
-    
     selector {
       match_labels {
         app = "azure-vote-back"
-        #role = "back"
+        role = "backend"
       }
     }
 
@@ -40,26 +39,28 @@ resource "kubernetes_deployment" "azure-vote-back" {
       metadata {
         labels {
           app = "azure-vote-back"
-          #role = "back"
+          role = "backend"
         }
       }
-
+    
       spec {
         container {
           name = "azure-vote-back"
           image = "redis"
 
           resources {
+          
             requests {
               cpu = "100m"
               memory = "128Mi"
             }
 
             limits {
-              cpu = "250m"
+              cpu = "200m"
               memory = "256Mi"
             }
           }
+
           port {
             container_port = 6379
             name = "redis"
@@ -67,58 +68,50 @@ resource "kubernetes_deployment" "azure-vote-back" {
         }
       }
     }
-
   }
+
+
 }
-
-
-#Create service for azure-vote-back
 
 resource "kubernetes_service" "azure-vote-back" {
   metadata {
-    name = "${kubernetes_deployment.azure-vote-back.metadata.0.name}"
-    namespace = "${kubernetes_namespace.azap_namespace.metadata.0.name}"
+    name = "azure-vote-back"
+    namespace = "azap-namespace"
   }
 
   spec {
-    selector {
-      app = "${kubernetes_deployment.azure-vote-back.metadata.0.name}"
-      #role = "back" #"${kubernetes_deployment.azure-vote-back.spec.1.selector.0.match_labels.0.role}"
+    port {
+      port = "6379"
+      name = "redis"
     }
 
-    port {
-      port = "${kubernetes_deployment.azure-vote-back.spec.0.template.0.spec.0.container.0.port.0.container_port}"
-      name = "${kubernetes_deployment.azure-vote-back.spec.0.template.0.spec.0.container.0.port.0.name}"
+    selector {
+      app = "azure-vote-back"
     }
   }
 }
-
-
-
-#Create deployment azure-vote-front
 
 resource "kubernetes_deployment" "azure-vote-front" {
   metadata {
     name = "azure-vote-front"
-    namespace = "${kubernetes_namespace.azap_namespace.metadata.0.name}"
-
+    namespace = "azap-namespace"
   }
 
   spec {
     replicas = 3
-
+    
     selector {
       match_labels {
-        app = "azure-vote-front" 
-        #role = "front"
+        app = "azure-vote-front"
+        role = "frontend"
       }
-    } 
-
+    }
+    
     template {
       metadata {
         labels {
           app = "azure-vote-front"
-          #role = "front"
+          role = "frontend"
         }
       }
 
@@ -128,73 +121,66 @@ resource "kubernetes_deployment" "azure-vote-front" {
           image = "microsoft/azure-vote-front:v1"
 
           resources {
+            limits {
+            cpu = "256m"
+            memory = "256Mi"
+            }
+
             requests {
               cpu = "100m"
               memory = "128Mi"
-
             }
-
-            limits {
-              cpu = "200m"
-              memory = "256Mi"
-            }
-
-
-          }
+        }
 
           port {
             container_port = 80
-            name = "az-vote-front"
-
           }
 
           env {
-            name = "${kubernetes_deployment.azure-vote-back.spec.0.template.0.spec.0.container.0.port.0.name}"
-            value = "${kubernetes_deployment.azure-vote-back.metadata.0.name}"
-
+            name = "REDIS"
+            value = "azure-vote-back"
           }
         }
       }
-    }  
-  }
-}
+    }
 
-#Create service azure-vote-front
+
+  }
+
+}
 
 resource "kubernetes_service" "azure-vote-front" {
   metadata {
-    name = "${kubernetes_deployment.azure-vote-front.metadata.0.name}"
-    namespace = "${kubernetes_namespace.azap_namespace.metadata.0.name}"
+    name = "azure-vote-front"
+    namespace = "azap-namespace"
   }
 
   spec {
     type = "LoadBalancer"
 
-    selector {
-      app = "${kubernetes_deployment.azure-vote-front.metadata.0.name}"
-      #role = "front" #"${kubernetes_deployment.azure-vote-front.spec.0.selector.0.match_labels.0.role}"
-    }
-
     port {
-      port = "${kubernetes_deployment.azure-vote-front.spec.0.template.0.spec.0.container.0.port.0.container_port}"
-      name = "${kubernetes_deployment.azure-vote-front.spec.0.template.0.spec.0.container.0.port.0.name}"
+      port = 80
     }
 
+    selector {
+      app = "azure-vote-front"
+    }
   }
 }
+
 
 
 ##################################################################
 # Network policy
 
-/*
 
-#Default network policy deny all in namespace terra-test-namespace ingress
 
-resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_terra-test-namespace" {
+#Default network policy deny all in namespace azap-namespace ingress
+
+resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_azap" {
   metadata {
     name        = "defaultnp-denyall-in"
-    namespace   = "${kubernetes_namespace.terra_test_namespace.metadata.0.name}"
+    namespace   = "azap-namespace"
   }
 
   spec {
@@ -209,6 +195,7 @@ resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_terra-test-na
 
 }
 
+/*
 #Default network policy deny all in namespace terra-test-namespace egress
 
 resource "kubernetes_network_policy" "terra_defaultnp_denyalleg_ns_terra-test-namespace" {
@@ -224,25 +211,26 @@ resource "kubernetes_network_policy" "terra_defaultnp_denyalleg_ns_terra-test-na
 
   }
 
-  
-
-
 }
 
-#Network policy allowing external traffic on testnginxpod
+*/
 
-resource "kubernetes_network_policy" "Allow-External" {
+
+
+#Network policy allowing external traffic on azure-vote-front
+
+resource "kubernetes_network_policy" "Allow-External-azapfront" {
   metadata {
     name = "allow-external"
-    namespace = "${kubernetes_namespace.azap_namespace.metadata.0.name}"
+    namespace = "azap-namespace"
 
   }
 
   spec {
     pod_selector {
       match_labels {
-        app = "azure-vote"
-        role = "front"
+        app = "azure-vote-front"
+        role = "frontend"
       }
     }
     ingress = [
@@ -256,4 +244,38 @@ resource "kubernetes_network_policy" "Allow-External" {
 }
 
 
-*/
+
+#Network policy allowing traffic on azure-vote-back from azure-vote-front
+
+resource "kubernetes_network_policy" "allowin-fromazapfront" {
+  metadata {
+    name = "allowin-fromazapfront"
+    namespace = "azap-namespace"
+  }
+
+  spec {
+    pod_selector {
+      match_labels {
+        app = "azure-vote-back"
+        role = "backend"
+      }
+    }
+
+    ingress = [
+      {
+        from = [
+          {
+            pod_selector {
+              match_labels {
+                app = "azure-vote-front"
+                role = "frontend"
+              }
+            }
+          }
+        ]
+      }
+    ]
+
+    policy_types = ["Ingress"]
+  }
+}
