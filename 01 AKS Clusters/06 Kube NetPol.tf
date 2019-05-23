@@ -96,5 +96,3 @@ resource "kubernetes_network_policy" "Allow-External" {
 
   }
 }
-
-
