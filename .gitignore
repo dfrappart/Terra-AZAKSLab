@@ -13,4 +13,5 @@ terraform.tfstate.backup
 EventDetails/
 crash.log
 /K8SResources
+/OthersModules
 
