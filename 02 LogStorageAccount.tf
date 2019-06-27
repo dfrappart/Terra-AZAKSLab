@@ -11,8 +11,8 @@
 module "DiagStorageAccount" {
 
     #Module location
-    source = "github.com/dfrappart/Terra-AZModuletest//Modules//03 StorageAccountGP"
-
+    #source = "github.com/dfrappart/Terra-AZModuletest//Modules//03 StorageAccountGP"
+    source = "./Modules/03 StorageAccountGP"
     #Module variable
     StorageAccountName          = "${terraform.workspace == "Prod" ? "stoa${var.EnvironmentTag}log" : "stoa${var.EnvironmentTag}logdev"}"
     RGName                      = "${module.ResourceGroupHubSpoke.Name}"
