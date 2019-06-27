@@ -8,14 +8,15 @@
 
 #Keyvault Random prefix
 module "KeyVaultRandomprefix" {
-    #Module source
-    source = "github.com/dfrappart/Terra-AZModuletest//Modules//00 RandomString/"
+  #Module source
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//00 RandomString/"
+  source = "./Modules/00 RandomString"
 
-    #Module variables
-    stringlenght        = "5"
-    stringspecial       = "false"
-    stringupper         = "false"
-    stringnumber        = "false"
+  #Module variables
+  stringlenght        = "5"
+  stringspecial       = "false"
+  stringupper         = "false"
+  stringnumber        = "false"
     
 }
 
@@ -25,13 +26,12 @@ module "KeyVaultRandomprefix" {
 module "KeyVault" {
 
   #Module source
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//27 Keyvault"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//27 Keyvault"
+  source = "./Modules/27 Keyvault"
 
   #Module variables
   KeyVaultName            = "${module.KeyVaultRandomprefix.Result}keyvault"
   KeyVaultRG              = "${module.ResourceGroupHubSpoke.Name}"
-  KeyVaultObjectIDPolicy2 = "${var.AzureServicePrincipalInteractive}"
-  KeyVaultObjectIDPolicy1 = "${var.AzureTFSP}"
   KeyVaultTenantID        = "${var.AzureTenantID}"
   KeyVaultSKUName         = "premium"
   EnvironmentTag          = "${var.EnvironmentTag}"
@@ -41,10 +41,35 @@ module "KeyVault" {
 }
 
 
+module "UserAP" {
+  #Module Source
+  source = "./Modules/30 KeyVault Access Policy"
+
+  #Modules Variables
+  VaultName             = "${module.KeyVault.Name}"
+  RGVaultName           = "${module.ResourceGroupHubSpoke.Name}"
+  KeyVaultTenantId      = "${var.AzureTenantID}"
+  KeyVaultAPObjectId    = "${var.AzureServicePrincipalInteractive}"
+}
+
+
+module "TFAP" {
+  #Module Source
+  source = "./Modules/30 KeyVault Access Policy"
+
+  #Modules Variables
+  VaultName             = "${module.KeyVault.Name}"
+  RGVaultName           = "${module.ResourceGroupHubSpoke.Name}"
+  KeyVaultTenantId      = "${var.AzureTenantID}"
+  KeyVaultAPObjectId    = "${var.AzureTFSP}"
+}
+
+
 module "StoringAKSAADServerAppIdInKeyVault" {
 
   #Module source
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  source = "./Modules/28 KeyvaultSecret"
 
   #Module variables
   PasswordName            = "AKSAADAppServerId"
@@ -60,7 +85,8 @@ module "StoringAKSAADServerAppIdInKeyVault" {
 module "StoringAKSAADServerAppSecretInKeyVault" {
 
   #Module source
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  source = "./Modules/28 KeyvaultSecret"
 
   #Module variables
   PasswordName            = "AKSAADAppServerSecret"
@@ -76,7 +102,8 @@ module "StoringAKSAADServerAppSecretInKeyVault" {
 module "StoringAKSAADClientAppIdInVault" {
 
   #Module source
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  source = "./Modules/28 KeyvaultSecret"
 
   #Module variables
   PasswordName            = "AKSAADAppClientId"
@@ -92,7 +119,8 @@ module "StoringAKSAADClientAppIdInVault" {
 module "StoringAKSSPAppIdInVault" {
 
   #Module source
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  source = "./Modules/28 KeyvaultSecret"
 
   #Module variables
   PasswordName            = "AKSSPAppId"
@@ -108,7 +136,8 @@ module "StoringAKSSPAppIdInVault" {
 module "StoringAKSSPSecretInVault" {
 
   #Module source
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  source = "./Modules/28 KeyvaultSecret"
 
   #Module variables
   PasswordName            = "AKSSPSecret"
@@ -124,7 +153,8 @@ module "StoringAKSSPSecretInVault" {
 module "StoringWinDefaultPWDInVault" {
 
   #Module source
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  source = "./Modules/28 KeyvaultSecret"
 
   #Module variables
   PasswordName            = "DefaultWinPWD"
@@ -140,7 +170,8 @@ module "StoringWinDefaultPWDInVault" {
 module "StoringSSHPublicKeyInVault" {
 
   #Module source
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//28 KeyvaultSecret"
+  source = "./Modules/28 KeyvaultSecret"
 
   #Module variables
   PasswordName            = "SSHPublicKey"
@@ -152,3 +183,4 @@ module "StoringSSHPublicKeyInVault" {
   ProvisioningDateTag     = "${var.ProvisioningDateTag}"
 
 }
+
