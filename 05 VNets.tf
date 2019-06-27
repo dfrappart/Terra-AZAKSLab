@@ -6,7 +6,8 @@
 
 module "VNetHub" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//02 VNet"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//02 VNet"
+  source = "./Modules/02 VNet"
 
   #Module variable
   vNetName            = "${var.VNet1Name}"
@@ -21,7 +22,8 @@ module "VNetHub" {
 
 module "VNetSpoke1" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//02 VNet"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//02 VNet"
+  source = "./Modules/02 VNet"
 
   #Module variable
   vNetName            = "${var.VNet2Name}"
@@ -36,13 +38,30 @@ module "VNetSpoke1" {
 
 module "VNetSpoke2" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//02 VNet"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//02 VNet"
+  source = "./Modules/02 VNet"
 
   #Module variable
   vNetName            = "${var.VNet3Name}"
   RGName              = "${module.ResourceGroupHubSpoke.Name}"
   vNetLocation        = "${var.AzureRegion}"
   vNetAddressSpace    = "${var.VNet3IPRange}"
+  EnvironmentTag      = "${var.EnvironmentTag}"
+  EnvironmentUsageTag = "${var.EnvironmentUsageTag}"
+  OwnerTag            = "${var.OwnerTag}"
+  ProvisioningDateTag = "${var.ProvisioningDateTag}"
+}
+
+module "VNetSpoke3" {
+  #Module location
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//02 VNet"
+  source = "./Modules/02 VNet"
+  
+  #Module variable
+  vNetName            = "${var.VNet4Name}"
+  RGName              = "${module.ResourceGroupHubSpoke.Name}"
+  vNetLocation        = "${var.AzureRegion}"
+  vNetAddressSpace    = "${var.VNet4IPRange}"
   EnvironmentTag      = "${var.EnvironmentTag}"
   EnvironmentUsageTag = "${var.EnvironmentUsageTag}"
   OwnerTag            = "${var.OwnerTag}"
