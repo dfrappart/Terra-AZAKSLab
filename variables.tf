@@ -34,22 +34,8 @@ variable "VNet1Name" {
 
 }
 
-#Variable defining the vnet ip range
-
-variable "VNet1IPRange" {
-  type    = "list"
-
-}
-
 variable "VNet2Name" {
   type    = "string"
-
-}
-
-#Variable defining the vnet ip range
-
-variable "VNet2IPRange" {
-  type    = "list"
 
 }
 
@@ -58,9 +44,31 @@ variable "VNet3Name" {
 
 }
 
+variable "VNet4Name" {
+  type    = "string"
+
+}
+
 #Variable defining the vnet ip range
 
+variable "VNet1IPRange" {
+  type    = "list"
+
+}
+
+
+variable "VNet2IPRange" {
+  type    = "list"
+
+}
+
+
 variable "VNet3IPRange" {
+  type    = "list"
+
+}
+
+variable "VNet4IPRange" {
   type    = "list"
 
 }
@@ -73,13 +81,7 @@ variable "SubnetAddressRange" {
 
 
 variable "SubnetName" {
-  default = {
-    "0" = "FE_Subnet"
-    "1" = "BE_Subnet"
-    "2" = "Bastion_Subnet"
-    "3" = "AzureFirewallSubnet"
-    "4" = "GatewaySubnet"
-  }
+  type = "map"
 }
 
 
@@ -154,6 +156,7 @@ variable "sku" {
   }
 }
 
+/*
 #Variable defining the AKS Cluster name
 
 variable "AKSName" {
@@ -164,9 +167,11 @@ variable "AKSwithRBACName" {
   type = "string"
 }
 
-#Variable defining the Log analytics workspace for AKS
+*/
 
-variable "AKSWorkspaceName" {
+#Variable defining the Log analytics workspace 
+
+variable "LAW" {
   type = "string"
 }
 
@@ -187,6 +192,8 @@ variable "LogAnalyticsSolutionProductName" {
 
 }
 
+
+/*
 #ACR variables
 
 variable "ACRAdminAccountEnabled" {
@@ -206,6 +213,10 @@ variable "ACRReplicationList" {
   default = ["francecentral","northeurope"]
   description = "The list of region in which the container registry is replicated"
 }
+
+
+*/
+
 
 #Tags definition
 
