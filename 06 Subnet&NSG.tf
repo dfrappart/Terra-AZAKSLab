@@ -14,7 +14,8 @@
 
 module "NSG_Bastion_Subnet" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//07 NSG"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//07 NSG"
+  source = "./Modules/07 NSG"
 
   #Module variable
   NSGName                     = "NSG_${lookup(var.SubnetName, 1)}"
@@ -30,7 +31,8 @@ module "NSG_Bastion_Subnet" {
 
 module "Bastion_Subnet" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-1 Subnet"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-1 Subnet"
+  source = "./Modules/06-1 Subnet"
 
   #Module variable
   SubnetName          = "${lookup(var.SubnetName, 1)}_${module.VNetHub.Name}"
@@ -63,7 +65,8 @@ module "Bastion_NSG_Subnet_Assocation" {
 
 module "NSG_ShareSVC_Subnet" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//07 NSG"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//07 NSG"
+  source = "./Modules/07 NSG"
 
   #Module variable
   NSGName                     = "NSG_${lookup(var.SubnetName, 0)}_${module.VNetHub.Name}"
@@ -79,7 +82,8 @@ module "NSG_ShareSVC_Subnet" {
 
 module "ShareSVC_Subnet" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-1 Subnet"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-1 Subnet"
+  source = "./Modules/06-1 Subnet"
 
   #Module variable
   SubnetName          = "${lookup(var.SubnetName, 0)}_${module.VNetHub.Name}"
@@ -111,7 +115,8 @@ module "ShareSVC_NSG_Subnet_Assocation" {
 
 module "FW_Subnet" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
+  source = "./Modules/06-2 SubnetWithoutNSG"
 
   #Module variable
   SubnetName          = "${lookup(var.SubnetName, 2)}"
@@ -127,7 +132,8 @@ module "FW_Subnet" {
 
 module "GW_Subnet" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
+  source = "./Modules/06-2 SubnetWithoutNSG"
 
   #Module variable
   SubnetName          = "${lookup(var.SubnetName, 3)}"
@@ -139,46 +145,105 @@ module "GW_Subnet" {
 }
 
 ######################################################################
-# Spoke 1 AKS Subnet
+# Hub Managed Bastion Subnet
 ######################################################################
 
-module "AKS_Subnet" {
+module "ManagedBastion_Subnet" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
-
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
+  source = "./Modules/06-2 SubnetWithoutNSG"
+  
   #Module variable
-  SubnetName          = "${lookup(var.SubnetName, 4)}_${module.VNetSpoke1.Name}"
+  SubnetName          = "${lookup(var.SubnetName, 4)}"
   RGName              = "${module.ResourceGroupHubSpoke.Name}"
-  vNetName            = "${module.VNetSpoke1.Name}"
+  vNetName            = "${module.VNetHub.Name}"
   Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 4)}"
 
 
 }
 
-module "AKSNoRbac_Subnet" {
+
+######################################################################
+# Spoke 1 AKS Subnet and virtual nodes
+######################################################################
+
+module "AKS_Subnet_Spoke1" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
+  source = "./Modules/06-2 SubnetWithoutNSG"
 
   #Module variable
-  SubnetName          = "${lookup(var.SubnetName, 8)}_${module.VNetSpoke1.Name}"
+  SubnetName          = "${lookup(var.SubnetName, 5)}"
   RGName              = "${module.ResourceGroupHubSpoke.Name}"
   vNetName            = "${module.VNetSpoke1.Name}"
+  Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 5)}"
+
+
+}
+
+
+
+module "AKSVirtualNodes_Subnet_Spoke1" {
+  #Module location
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
+  source = "./Modules/06-2 SubnetWithoutNSG"
+
+  #Module variable
+  SubnetName          = "${lookup(var.SubnetName, 6)}"
+  RGName              = "${module.ResourceGroupHubSpoke.Name}"
+  vNetName            = "${module.VNetSpoke1.Name}"
+  Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 6)}"
+
+
+}
+
+######################################################################
+# Spoke 2 AKS Subnet and virtual nodes
+######################################################################
+
+module "AKS_Subnet_Spoke2" {
+  #Module location
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
+  source = "./Modules/06-2 SubnetWithoutNSG"
+
+  #Module variable
+  SubnetName          = "${lookup(var.SubnetName, 7)}"
+  RGName              = "${module.ResourceGroupHubSpoke.Name}"
+  vNetName            = "${module.VNetSpoke2.Name}"
+  Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 7)}"
+
+
+}
+
+
+
+module "AKSVirtualNodes_Subnet_Spoke2" {
+  #Module location
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-2 SubnetWithoutNSG"
+  source = "./Modules/06-2 SubnetWithoutNSG"
+
+  #Module variable
+  SubnetName          = "${lookup(var.SubnetName, 8)}"
+  RGName              = "${module.ResourceGroupHubSpoke.Name}"
+  vNetName            = "${module.VNetSpoke2.Name}"
   Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 8)}"
 
 
 }
+
 ######################################################################
-# Spoke 2 FE Subnet
+# Spoke 3 FE Subnet
 ######################################################################
 
 #FE_Subnet NSG
 
-module "NSG_FE_Subnet" {
+module "NSG_FE_Subnet_Spoke3" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//07 NSG"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//07 NSG"
+  source = "./Modules/07 NSG"
 
   #Module variable
-  NSGName                     = "NSG_${lookup(var.SubnetName, 6)}_${module.VNetSpoke2.Name}"
+  NSGName                     = "NSG_${lookup(var.SubnetName, 9)}"
   RGName                      = "${module.ResourceGroupHubSpoke.Name}"
   NSGLocation                 = "${var.AzureRegion}"
   EnvironmentTag              = "${var.EnvironmentTag}"
@@ -189,23 +254,25 @@ module "NSG_FE_Subnet" {
 
 #FE_Subnet
 
-module "FE_Subnet" {
+module "FE_Subnet_Spoke3" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-1 Subnet"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-1 Subnet"
+  source = "./Modules/06-1 Subnet"
 
   #Module variable
-  SubnetName          = "${lookup(var.SubnetName, 6)}_${module.VNetSpoke2.Name}"
+  SubnetName          = "${lookup(var.SubnetName, 9)}"
   RGName              = "${module.ResourceGroupHubSpoke.Name}"
-  vNetName            = "${module.VNetSpoke2.Name}"
-  Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 6)}"
-  NSGid               = "${module.NSG_FE_Subnet.Id}"
+  vNetName            = "${module.VNetSpoke3.Name}"
+  Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 9)}"
+  NSGid               = "${module.NSG_FE_Subnet_Spoke3.Id}"
 
 }
 
 /*
 module "FE_NSG_Subnet_Assocation" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//07-1 NSG Association"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-1 Subnet"
+  source = "./Modules/06-1 Subnet"
 
   #Module variable
   SubnetId            = "${module.NSG_FE_Subnet.Id}"
@@ -222,12 +289,13 @@ module "FE_NSG_Subnet_Assocation" {
 
 #BE_Subnet NSG
 
-module "NSG_BE_Subnet" {
+module "NSG_BE_Subnet_Spoke3" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//07 NSG"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//07 NSG"
+  source = "./Modules/07 NSG"
 
   #Module variable
-  NSGName                     = "NSG_${lookup(var.SubnetName, 7)}_${module.VNetSpoke2.Name}"
+  NSGName                     = "NSG_${lookup(var.SubnetName, 10)}"
   RGName                      = "${module.ResourceGroupHubSpoke.Name}"
   NSGLocation                 = "${var.AzureRegion}"
   EnvironmentTag              = "${var.EnvironmentTag}"
@@ -239,16 +307,17 @@ module "NSG_BE_Subnet" {
 #BE_Subnet
 
 
-module "BE_Subnet" {
+module "BE_Subnet_Spoke3" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-1 Subnet"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-1 Subnet"
+  source = "./Modules/06-1 Subnet"
 
   #Module variable
-  SubnetName          = "${lookup(var.SubnetName, 7)}_${module.VNetSpoke2.Name}"
+  SubnetName          = "${lookup(var.SubnetName, 10)}"
   RGName              = "${module.ResourceGroupHubSpoke.Name}"
-  vNetName            = "${module.VNetSpoke2.Name}"
-  Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 7)}"
-  NSGid               = "${module.NSG_BE_Subnet.Id}"
+  vNetName            = "${module.VNetSpoke3.Name}"
+  Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 10)}"
+  NSGid               = "${module.NSG_BE_Subnet_Spoke3.Id}"
 
 }
 
@@ -268,17 +337,18 @@ module "BE_NSG_Subnet_Assocation" {
 */
 
 ######################################################################
-# Spoke 2 Application Gateway Subnet
+# Spoke 3 Application Gateway Subnet
 ######################################################################
 
 #AppGW_Subnet NSG
 
 module "NSG_AppGW_Subnet" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//07 NSG"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//07 NSG"
+  source = "./Modules/07 NSG"
 
   #Module variable
-  NSGName                     = "NSG_${lookup(var.SubnetName, 5)}_${module.VNetSpoke2.Name}"
+  NSGName                     = "NSG_${lookup(var.SubnetName, 11)}_${module.VNetSpoke2.Name}"
   RGName                      = "${module.ResourceGroupHubSpoke.Name}"
   NSGLocation                 = "${var.AzureRegion}"
   EnvironmentTag              = "${var.EnvironmentTag}"
@@ -287,17 +357,18 @@ module "NSG_AppGW_Subnet" {
   ProvisioningDateTag         = "${var.ProvisioningDateTag}"
 }
 
-#BE_Subnet
+#AppGw_Subnet
 
 module "AppGW_Subnet" {
   #Module location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-1 Subnet"
-
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//06-1 Subnet"
+  source = "./Modules/06-1 Subnet"
+  
   #Module variable
-  SubnetName          = "${lookup(var.SubnetName, 5)}_${module.VNetSpoke2.Name}"
+  SubnetName          = "${lookup(var.SubnetName, 11)}"
   RGName              = "${module.ResourceGroupHubSpoke.Name}"
-  vNetName            = "${module.VNetSpoke2.Name}"
-  Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 5)}"
+  vNetName            = "${module.VNetSpoke3.Name}"
+  Subnetaddressprefix = "${lookup(var.SubnetAddressRange, 11)}"
   NSGid               = "${module.NSG_AppGW_Subnet.Id}"
 
 }
