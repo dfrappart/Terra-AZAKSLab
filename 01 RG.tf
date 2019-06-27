@@ -6,10 +6,11 @@
 
 module "ResourceGroupHubSpoke" {
   #Module Location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//01 ResourceGroup/"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//01 ResourceGroup/"
+  source = "./Modules/01 ResourceGroup"
 
   #Module variable
-  RGName              = "${var.RGName}"
+  RGName              = "${var.RGName}${var.EnvironmentTag}"
   RGLocation          = "${var.AzureRegion}"
   EnvironmentTag      = "${var.EnvironmentTag}"
   EnvironmentUsageTag = "${var.EnvironmentUsageTag}"
@@ -18,28 +19,16 @@ module "ResourceGroupHubSpoke" {
 
 }
 
-# Creating the ResourceGroups
 
-module "ResourceGroupAKS" {
-  #Module Location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//01 ResourceGroup/"
 
-  #Module variable
-  RGName              = "${var.RGAKSName}"
-  RGLocation          = "${var.AzureRegion}"
-  EnvironmentTag      = "${var.EnvironmentTag}"
-  EnvironmentUsageTag = "${var.EnvironmentUsageTag}"
-  OwnerTag            = "${var.OwnerTag}"
-  ProvisioningDateTag = "${var.ProvisioningDateTag}"
 
-}
-
+/*
 module "ResourceGroupBastion" {
-  #Module Location
-  source = "github.com/dfrappart/Terra-AZModuletest//Modules//01 ResourceGroup/"
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//01 ResourceGroup/"
+  source = "./Modules/01 ResourceGroup"
 
   #Module variable
-  RGName              = "${var.RGBastionName}"
+  RGName              = "${var.RGBastionName}${var.EnvironmentTag}"
   RGLocation          = "${var.AzureRegion}"
   EnvironmentTag      = "${var.EnvironmentTag}"
   EnvironmentUsageTag = "${var.EnvironmentUsageTag}"
@@ -47,3 +36,5 @@ module "ResourceGroupBastion" {
   ProvisioningDateTag = "${var.ProvisioningDateTag}"
 
 }
+
+*/
