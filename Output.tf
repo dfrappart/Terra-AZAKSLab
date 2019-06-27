@@ -13,6 +13,7 @@ output "ResourceGroup1_Id" {
   value = "${module.ResourceGroupHubSpoke.Id}"
 }
 
+/*
 ######################################################
 # Resource group Bastion info Output
 
@@ -23,7 +24,7 @@ output "ResourceGroup2_Name" {
 output "ResourceGroup2_Id" {
   value = "${module.ResourceGroupBastion.Id}"
 }
-
+*/
 /*
 ######################################################
 # Resource group Bastion info Output
@@ -80,6 +81,21 @@ output "VNet3_Id" {
 
 output "VNet3_AddressSpace" {
   value = "${module.VNetSpoke2.AddressSpace}"
+}
+
+######################################################
+# vNet Spoke3 info Output
+
+output "VNet4_Name" {
+  value = "${module.VNetSpoke3.Name}"
+}
+
+output "VNet4_Id" {
+  value = "${module.VNetSpoke3.Id}"
+}
+
+output "VNet4_AddressSpace" {
+  value = "${module.VNetSpoke3.AddressSpace}"
 }
 
 ######################################################
@@ -216,66 +232,124 @@ output "VNet1_Subnet4_AddressPrefix" {
   value = "${module.GW_Subnet.AddressPrefix}"
 }
 
+######################################################
+#Managed Bastion Subnet
 
+output "VNet1_Subnet5_Name" {
+  value = "${module.ManagedBastion_Subnet.Name}"
+}
+
+output "VNet1_Subnet5_Id" {
+  value = "${module.ManagedBastion_Subnet.Id}"
+}
+
+output "VNet1_Subnet5_AddressPrefix" {
+  value = "${module.ManagedBastion_Subnet.AddressPrefix}"
+}
 
 ######################################################
 #Spoke 1 AKS Subnet
 
 output "VNet2_Subnet1_Name" {
-  value = "${module.AKS_Subnet.Name}"
+  value = "${module.AKS_Subnet_Spoke1.Name}"
 }
 
 output "VNet2_Subnet1_Id" {
-  value = "${module.AKS_Subnet.Id}"
+  value = "${module.AKS_Subnet_Spoke1.Id}"
 }
 
 output "VNet2_Subnet1_AddressPrefix" {
-  value = "${module.AKS_Subnet.AddressPrefix}"
+  value = "${module.AKS_Subnet_Spoke1.AddressPrefix}"
 }
 
 ######################################################
-#Spoke 2 FE_Subnet
+#Spoke 1 Virtual Nodes Subnet
+
+output "VNet2_Subnet2_Name" {
+  value = "${module.AKSVirtualNodes_Subnet_Spoke1.Name}"
+}
+
+output "VNet2_Subnet2_Id" {
+  value = "${module.AKSVirtualNodes_Subnet_Spoke1.Id}"
+}
+
+output "VNet2_Subnet2_AddressPrefix" {
+  value = "${module.AKSVirtualNodes_Subnet_Spoke1.AddressPrefix}"
+}
+
+######################################################
+#Spoke 2 AKS Subnet
 
 output "VNet3_Subnet1_Name" {
-  value = "${module.FE_Subnet.Name}"
+  value = "${module.AKS_Subnet_Spoke2.Name}"
 }
 
 output "VNet3_Subnet1_Id" {
-  value = "${module.FE_Subnet.Id}"
+  value = "${module.AKS_Subnet_Spoke2.Id}"
 }
 
 output "VNet3_Subnet1_AddressPrefix" {
-  value = "${module.FE_Subnet.AddressPrefix}"
+  value = "${module.AKS_Subnet_Spoke2.AddressPrefix}"
 }
 
-
 ######################################################
-#BE_Subnet
+#Spoke 2 Virtual Nodes Subnet
 
 output "VNet3_Subnet2_Name" {
-  value = "${module.BE_Subnet.Name}"
+  value = "${module.AKSVirtualNodes_Subnet_Spoke2.Name}"
 }
 
 output "VNet3_Subnet2_Id" {
-  value = "${module.BE_Subnet.Id}"
+  value = "${module.AKSVirtualNodes_Subnet_Spoke2.Id}"
 }
 
 output "VNet3_Subnet2_AddressPrefix" {
-  value = "${module.BE_Subnet.AddressPrefix}"
+  value = "${module.AKSVirtualNodes_Subnet_Spoke2.AddressPrefix}"
 }
 
 ######################################################
-#Application Gateway Subnet
+#Spoke 3 FE_Subnet
 
-output "VNet3_Subnet3_Name" {
+output "VNet4_Subnet1_Name" {
+  value = "${module.FE_Subnet_Spoke3.Name}"
+}
+
+output "VNet4_Subnet1_Id" {
+  value = "${module.FE_Subnet_Spoke3.Id}"
+}
+
+output "VNet4_Subnet1_AddressPrefix" {
+  value = "${module.FE_Subnet_Spoke3.AddressPrefix}"
+}
+
+
+######################################################
+#Spoke 3 BE_Subnet
+
+output "VNet4_Subnet2_Name" {
+  value = "${module.BE_Subnet_Spoke3.Name}"
+}
+
+output "VNet4_Subnet2_Id" {
+  value = "${module.BE_Subnet_Spoke3.Id}"
+}
+
+output "VNet4_Subnet2_AddressPrefix" {
+  value = "${module.BE_Subnet_Spoke3.AddressPrefix}"
+}
+
+######################################################
+#Spoke 3 Application Gateway Subnet
+
+output "VNet4_Subnet3_Name" {
   value = "${module.AppGW_Subnet.Name}"
 }
 
-output "VNet3_Subnet3_Id" {
+output "VNet4_Subnet3_Id" {
   value = "${module.AppGW_Subnet.Id}"
 }
 
-output "VNet3_Subnet3_AddressPrefix" {
+output "VNet4_Subnet3_AddressPrefix" {
   value = "${module.AppGW_Subnet.AddressPrefix}"
 }
 
@@ -311,53 +385,53 @@ output "KeyVault_enabled_for_template_deployment" {
 ######################################################
 #workspace analytics output
 
-output "AKSWorkspace_Name" {
-  value = "${module.AKSWorkspace.Name}"
+output "LAWorkspace_Name" {
+  value = "${module.SharedLAWS.Name}"
 
 }
 
 
-output "AKSWorkspace_Location" {
-  value = "${module.AKSWorkspace.Location}"
+output "LAWorkspace_Location" {
+  value = "${module.SharedLAWS.Location}"
 
 }
 
-output "AKSWorkspace_RG" {
-  value = "${module.AKSWorkspace.RG}"
+output "LAWorkspace_RG" {
+  value = "${module.SharedLAWS.RG}"
 
 }
 
-output "AKSWorkspace_Sku" {
-  value = "${module.AKSWorkspace.Sku}"
+output "LAWorkspace_Sku" {
+  value = "${module.SharedLAWS.Sku}"
 
 }
 
-output "AKSWorkspace_Id" {
-  value = "${module.AKSWorkspace.Id}"
+output "LAWorkspace_Id" {
+  value = "${module.SharedLAWS.Id}"
 
 }
 
-output "AKSWorkspace_PSK" {
+output "LAWorkspace_PSK" {
   sensitive = true
-  value = "${module.AKSWorkspace.PSK}"
+  value = "${module.SharedLAWS.PSK}"
 
 }
 
-output "AKSWorkspace_SSK" {
+output "LAWorkspace_SSK" {
   sensitive = true
-  value = "${module.AKSWorkspace.SSK}"
+  value = "${module.SharedLAWS.SSK}"
 
 }
 
-output "AKSWorkspace_WSId" {
+output "LAWorkspace_WSId" {
 
-  value = "${module.AKSWorkspace.WSId}"
+  value = "${module.SharedLAWS.WSId}"
 
 }
 
-output "AKSWorkspace_PortalUrl" {
+output "LAWorkspace_PortalUrl" {
 
-  value = "${module.AKSWorkspace.PortalUrl}"
+  value = "${module.SharedLAWS.PortalUrl}"
 
 }
 
