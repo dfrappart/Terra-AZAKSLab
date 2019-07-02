@@ -5,6 +5,17 @@
 
 # FW Public IP
 
+resource "random_string" "FWIPRandomstring" {
+
+
+
+    length      = "4"
+    special     = false
+    upper       = false
+    number      = true
+
+}
+
 resource "azurerm_public_ip" "TerraZRPIPFW" {
   name                         = "${var.FWName}PublicIp"
   location                     = "${var.FWLocation}"
@@ -12,7 +23,7 @@ resource "azurerm_public_ip" "TerraZRPIPFW" {
   #public_ip_address_allocation = "static" changed for allocation_method
   allocation_method            = "Static"
   sku                          = "standard"
-  domain_name_label            = "${lower(var.EnvironmentTag)}${lower(var.FWName)}${lower(terraform.workspace)}"
+  domain_name_label            = "${lower(var.EnvironmentTag)}${lower(var.FWName)}${lower(terraform.workspace)}${random_string.FWIPRandomstring.result}"
 
 
   tags = {

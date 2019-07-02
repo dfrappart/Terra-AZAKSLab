@@ -8,6 +8,19 @@
 
 #Creating File storage account
 
+module "StoaFileRandomprefix" {
+  #Module source
+  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//00 RandomString/"
+  source = "./Modules/00 RandomString"
+
+  #Module variables
+  stringlenght        = "3"
+  stringspecial       = "false"
+  stringupper         = "false"
+
+    
+}
+
 module "FileStorageAccount" {
 
     #Module location
@@ -15,7 +28,7 @@ module "FileStorageAccount" {
     source = "./Modules/03 StorageAccountGP"
 
     #Module variable
-    StorageAccountName          = "${terraform.workspace == "Prod" ? "stoa${var.EnvironmentTag}file" : "stoa${var.EnvironmentTag}filedev"}"
+    StorageAccountName          = "${terraform.workspace == "Prod" ? "stoa${var.EnvironmentTag}${module.StoaFileRandomprefix.Result}file" : "stoa${var.EnvironmentTag}${module.StoaFileRandomprefix.Result}filedev"}"
     RGName                      = "${module.ResourceGroupHubSpoke.Name}"
     StorageAccountLocation      = "${var.AzureRegion}"
     StorageAccountTier          = "${lookup(var.storageaccounttier, 0)}"
