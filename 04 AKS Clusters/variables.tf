@@ -9,14 +9,6 @@ variable "AzureRegion" {
   default = "westeurope"
 }
 
-/*
-# Variable defining the RG containing the VNet
-
-variable "RGInfraName" {
-  type    = "string"
-
-}
-*/
 
 # Variable defining the RG containing the AKS Cluster
 

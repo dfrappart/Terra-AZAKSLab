@@ -17,7 +17,7 @@ resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_terra-test-na
 }
 
 #Default network policy deny all ingress traffic from other namespace tp pods in  terra-test-namespace
-/*
+
 resource "kubernetes_network_policy" "terra_defaultnp_denyallin_fromotherns" {
   metadata {
     name      = "defaultnp-denyallin-fromotherns"
@@ -37,7 +37,7 @@ resource "kubernetes_network_policy" "terra_defaultnp_denyallin_fromotherns" {
     policy_types = ["Ingress"]
   }
 }
-*/
+
 #Default network policy deny all in namespace terra-test-namespace egress
 /*
 resource "kubernetes_network_policy" "terra_defaultnp_denyalleg_ns_terra-test-namespace" {
@@ -79,4 +79,5 @@ resource "kubernetes_network_policy" "Allow-External" {
     policy_types = ["Ingress"]
   }
 }
+
 */
