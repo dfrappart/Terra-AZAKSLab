@@ -60,5 +60,13 @@ module "AKSClus" {
   #the following parameters are optional because defined with default values
   AKSSVCCIDR          = "172.19.0.0/16"
   AKSDockerBridgeCIDR = "172.17.0.1/16"
+
+  #New stuff for AKS
+  AKSAZ               = ["1","2","3"]
+  #EnablePodPolicy     = "true"
+  AKSNodesRG          = "Thisishere"
+  AKSNodePoolType     = "VirtualMachineScaleSets"
+  AKSLBSku            = "standard"
+
 }
 

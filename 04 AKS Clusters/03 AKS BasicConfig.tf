@@ -74,7 +74,7 @@ resource "kubernetes_role_binding" "terraadminnamspace" {
 # Create K8S Resources
 
 #Create test pod nginx
-/*
+
 resource "kubernetes_pod" "testnginx" {
   metadata {
     name = "testnginxpod"
@@ -93,7 +93,7 @@ resource "kubernetes_pod" "testnginx" {
 }
 
 #Create Service exposing test pod nginx
-/*
+
 resource "kubernetes_service" "testnginxsvc" {
   metadata {
     name      = "testnginxsvc"
@@ -112,9 +112,9 @@ resource "kubernetes_service" "testnginxsvc" {
     type = "LoadBalancer"
   }
 }
-*/
+
 #Create test deployment
-/*
+
 resource "kubernetes_deployment" "testnginxdeployment" {
   metadata {
     name = "testnginxdeployment"
@@ -160,9 +160,9 @@ resource "kubernetes_deployment" "testnginxdeployment" {
     }
   }
 }
-*/
+
 #Create Service exposing test deployment nginx
-/*
+
 resource "kubernetes_service" "testnginxsvc2" {
   metadata {
     name      = "testnginxsvc2"
@@ -182,4 +182,4 @@ resource "kubernetes_service" "testnginxsvc2" {
   }
 }
 
-*/
+

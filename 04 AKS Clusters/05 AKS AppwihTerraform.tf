@@ -16,9 +16,9 @@ resource "kubernetes_namespace" "azap_namespace" {
     name = "azap-namespace"
   }
 }
-*/
+
 #Create deployment azure-vote-back
-/*
+
 resource "kubernetes_deployment" "azure-vote-back" {
   metadata {
     name      = "azure-vote-back"
@@ -86,9 +86,9 @@ resource "kubernetes_service" "azure-vote-back" {
     }
   }
 }
-*/
 
-/*
+
+
 resource "kubernetes_deployment" "azure-vote-front" {
   metadata {
     name      = "azure-vote-front"
@@ -162,12 +162,12 @@ resource "kubernetes_service" "azure-vote-front" {
     }
   }
 }
-*/
+
 ##################################################################
 # Network policy
 
 #Default network policy deny all in namespace azap-namespace ingress
-/*
+
 resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_azap" {
   metadata {
     name      = "defaultnp-denyall-in"
@@ -180,7 +180,7 @@ resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_azap" {
     policy_types = ["Ingress"]
   }
 }
-*/
+
 
 /*
 #Default network policy deny all in namespace terra-test-namespace egress
@@ -200,10 +200,10 @@ resource "kubernetes_network_policy" "terra_defaultnp_denyalleg_ns_terra-test-na
 
 }
 
-*/
+
 
 #Network policy allowing external traffic on azure-vote-front
-/*
+
 resource "kubernetes_network_policy" "Allow-External-azapfront" {
   metadata {
     name      = "allow-external"
@@ -253,4 +253,6 @@ resource "kubernetes_network_policy" "allowin-fromazapfront" {
     policy_types = ["Ingress"]
   }
 }
+
+
 */
