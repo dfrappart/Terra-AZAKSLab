@@ -13,5 +13,5 @@ VNet4Name             = "VNetSpoke3"
 EnvironmentTag      = "AKSLab"
 EnvironmentUsageTag = "PoC"
 OwnerTag            = "DF"
-ProvisioningDateTag = "20190625"
+ProvisioningDateTag = "20190917"
 

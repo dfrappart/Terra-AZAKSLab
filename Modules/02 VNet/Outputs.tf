@@ -21,6 +21,6 @@ output "RGName" {
   value = "${azurerm_virtual_network.Terra-vNet.resource_group_name}"
 }
 
-output "RGLocation" {
+output "Location" {
   value = "${azurerm_virtual_network.Terra-vNet.location}"
 }
