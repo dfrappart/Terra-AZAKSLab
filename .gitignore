@@ -14,4 +14,5 @@ EventDetails/
 crash.log
 /K8SResources
 /OthersModules
-
+terraform.tfvars
+terraformbackendconfig.tf
