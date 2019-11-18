@@ -1,0 +1,13 @@
+#################################################################
+# Backend Config
+#################################################################
+
+
+terraform {
+  backend "azurerm" {
+    storage_account_name = "stoarstatedf"
+    container_name       = "terraform"
+    key                  = ""
+    access_key           = ""
+  }
+}
