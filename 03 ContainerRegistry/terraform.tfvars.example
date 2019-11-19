@@ -1,0 +1,12 @@
+######################################################################
+# Variables for Azure Container Registry config
+######################################################################
+
+RGName = "ACRTest"
+AzureRegion = "westeurope"
+EnvironmentTag = "DEV"
+EnvironmentUsageTag = "ACRTest"
+OwnerTag ="DFR"
+ProvisioningDateTag = "20191104"
+ACRSku = "standard"
+#ACRReplicationList = ["northeurope","francecentral"]
