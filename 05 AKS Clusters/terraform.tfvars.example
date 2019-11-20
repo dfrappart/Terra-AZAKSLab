@@ -1,0 +1,51 @@
+######################################################################
+# This filedefine the build variables
+######################################################################
+
+#Provider variable
+
+AzureSubscriptionID   = ""
+AzureClientID         = ""
+AzureClientSecret     = ""
+AzureTenantID         = ""
+
+#Backend data sources variables
+
+statestoa               = ""
+statecontainer          = ""
+statestoakey            = ""
+statekey                = "hubsetup.tfstate"
+statekeykeyvault        = "Keyvaultsetup.tfstate"
+statekeyrecoveryvault   = "RecoveryServices.tfstate"
+
+#Modules variables
+
+#VM related 
+
+AzureRegion                     = "westeurope"
+RGVMRole                        = "vmtest-1"
+ASGRole                         = "vmtest-1"
+VMPIPRole                       = "vmtest-1"
+NICRole                         = "vmtest-1"
+VMRole                          = "vmtest-1"
+VMAdminName                     = "VMAdmin"
+VMSize                          = "Standard_F4S"
+VMZone                          = 1
+VMPublisherName                 = "MicrosoftWindowsServer"
+VMOffer                         = "WindowsServer"
+VMsku                           = "2019-Datacenter"
+Manageddiskstoragetier          = "premium_lrs"
+OSDisksize                      = 254
+VMDiskRole                      = ""
+
+
+#Tags related resources
+applicationTag       = "infr"
+costcenterTag        = "infr"
+businessunitTag      = "infr"
+managedbyTag         = "infr"
+environmentTag       = "dev"
+hostnameTag          = "N/A"
+ownerTag             = "dfr"
+roleTag              = "hub"
+createdbyTag         = "terraform"
