@@ -8,9 +8,9 @@ provider "kubernetes" {
 ##################################################################
 # associate user & groups to cluster admin role
 
-resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_user" {
+resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_userjet" {
   metadata {
-    name = "terracreated-clusteradminrole-binding-user"
+    name = "terracreated-clusteradminrole-binding-userjet"
   }
 
   role_ref {
@@ -22,9 +22,33 @@ resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_
   subject {
     api_group = "rbac.authorization.k8s.io"
     kind      = "User"
-    name      = var.AKSClusterAdminUSer
+    name      = "jet@teknews.cloud"
   }
 }
+
+
+##################################################################
+# associate user & groups to cluster admin role
+
+resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_userdfr" {
+  metadata {
+    name = "terracreated-clusteradminrole-binding-userdfr"
+  }
+
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "cluster-admin"
+  }
+
+  subject {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "User"
+    name      = "${var.AKSClusterAdminUSer}"
+  }
+}
+
+
 
 ##################################################################
 # Create namespace test
@@ -43,6 +67,7 @@ resource "kubernetes_namespace" "terra_test_namespace" {
     name = "terra-test-namespace"
   }
 }
+
 
 
 
@@ -70,6 +95,8 @@ resource "kubernetes_role_binding" "terraadminnamspace" {
 
 
 
+
+/*
 ##################################################################
 # Create K8S Resources
 
@@ -182,4 +209,4 @@ resource "kubernetes_service" "testnginxsvc2" {
   }
 }
 
-
+*/

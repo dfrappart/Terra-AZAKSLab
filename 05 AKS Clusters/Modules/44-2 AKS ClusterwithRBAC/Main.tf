@@ -49,6 +49,10 @@ resource "azurerm_kubernetes_cluster" "TerraAKSwithRBAC" {
       enabled                     = var.IsOMSAgentEnabled
       log_analytics_workspace_id  = lower(var.AKSLAWId)
     }
+
+    kube_dashboard {
+      enabled = true
+    }
   }
   
   kubernetes_version                = var.KubeVersion

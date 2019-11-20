@@ -72,5 +72,8 @@ module "AKSClus" {
   MinAutoScaleCount   = var.MinAutoScaleCount
   MaxAutoScaleCount   = var.MaxAutoScaleCount
 
+  KubeVersion         = var.KubeVersion
+
+
 }
 

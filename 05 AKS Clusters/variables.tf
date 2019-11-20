@@ -90,7 +90,7 @@ variable "AKSMaxPods" {
 
 variable "KubeVersion" {
   type    = string
-  default = "1.12.5"
+  default = "1.14.8"
 }
 
 variable "AKSDNSSVCIPModfier" {

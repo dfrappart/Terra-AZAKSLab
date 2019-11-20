@@ -2,7 +2,7 @@
 # Network policy
 
 #Default network policy deny all in namespace terra-test-namespace ingress
-
+/*
 resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_terra-test-namespace" {
   metadata {
     name      = "defaultnp-denyall-in"
