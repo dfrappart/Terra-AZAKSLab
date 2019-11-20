@@ -70,10 +70,10 @@ module "AKSVirtualNodes_Subnet_Spoke1" {
   source = "./Modules/10-2 SubnetWithoutNSG"
 
   #Module variable
-  SubnetName          = element(var.SubnetName, 1)
+  SubnetName          = element(var.SubnetName, 2)
   RGName              = module.ResourceGroupSpoke.Name
   VNetName            = module.VNetSpoke1.Name
-  Subnetaddressprefix = element(var.SubnetAddressRange, 1)
+  Subnetaddressprefix = element(var.SubnetAddressRange, 2)
 
 
 }

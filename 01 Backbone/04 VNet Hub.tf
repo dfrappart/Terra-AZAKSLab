@@ -46,7 +46,7 @@ module "NSG_Bastion_Subnet" {
   source = "./Modules/09 NSG"
 
   #Module variable
-  NSGName                     = "NSG_${lookup(var.SubnetName, 1)}"
+  NSGName                     = "NSG_${element(var.SubnetName, 1)}"
   RGName                      = module.ResourceGroupHub.Name
   NSGLocation                 = var.AzureRegion
   EnvironmentTag              = var.EnvironmentTag
@@ -63,10 +63,10 @@ module "Bastion_Subnet" {
   source = "./Modules/10-1 Subnet"
 
   #Module variable
-  SubnetName          = "${lookup(var.SubnetName, 1)}_${module.VNetHub.Name}"
+  SubnetName          = "${element(var.SubnetName, 1)}_${module.VNetHub.Name}"
   RGName              = module.ResourceGroupHub.Name
   VNetName            = module.VNetHub.Name
-  Subnetaddressprefix = lookup(var.SubnetAddressRange, 1)
+  Subnetaddressprefix = element(var.SubnetAddressRange, 1)
   NSGId               = module.NSG_Bastion_Subnet.Id
 
 }
@@ -80,7 +80,7 @@ module "NSG_ShareSVC_Subnet" {
   source = "./Modules/09 NSG"
 
   #Module variable
-  NSGName                     = "NSG_${lookup(var.SubnetName, 0)}_${module.VNetHub.Name}"
+  NSGName                     = "NSG_${element(var.SubnetName, 0)}_${module.VNetHub.Name}"
   RGName                      = module.ResourceGroupHub.Name
   NSGLocation                 = var.AzureRegion
   EnvironmentTag              = var.EnvironmentTag
@@ -97,10 +97,10 @@ module "ShareSVC_Subnet" {
   source = "./Modules/10-1 Subnet"
 
   #Module variable
-  SubnetName          = "${lookup(var.SubnetName, 0)}_${module.VNetHub.Name}"
+  SubnetName          = "${element(var.SubnetName, 0)}_${module.VNetHub.Name}"
   RGName              = module.ResourceGroupHub.Name
   VNetName            = module.VNetHub.Name
-  Subnetaddressprefix = lookup(var.SubnetAddressRange, 0)
+  Subnetaddressprefix = element(var.SubnetAddressRange, 0)
   NSGId               = module.NSG_ShareSVC_Subnet.Id
 
 }
@@ -114,10 +114,10 @@ module "FW_Subnet" {
   source = "./Modules/10-2 SubnetWithoutNSG"
 
   #Module variable
-  SubnetName          = lookup(var.SubnetName, 2)
+  SubnetName          = element(var.SubnetName, 2)
   RGName              = module.ResourceGroupHub.Name
   VNetName            = module.VNetHub.Name
-  Subnetaddressprefix = lookup(var.SubnetAddressRange, 2)
+  Subnetaddressprefix = element(var.SubnetAddressRange, 2)
 
 }
 
@@ -131,10 +131,10 @@ module "GW_Subnet" {
   source = "./Modules/10-2 SubnetWithoutNSG"
 
   #Module variable
-  SubnetName          = lookup(var.SubnetName, 3)
+  SubnetName          = element(var.SubnetName, 3)
   RGName              = module.ResourceGroupHub.Name
   VNetName            = module.VNetHub.Name
-  Subnetaddressprefix = lookup(var.SubnetAddressRange, 3)
+  Subnetaddressprefix = element(var.SubnetAddressRange, 3)
 
 
 }
@@ -149,63 +149,13 @@ module "ManagedBastion_Subnet" {
   source = "./Modules/10-2 SubnetWithoutNSG"
   
   #Module variable
-  SubnetName          = lookup(var.SubnetName, 4)
+  SubnetName          = element(var.SubnetName, 4)
   RGName              = module.ResourceGroupHub.Name
   VNetName            = module.VNetHub.Name
-  Subnetaddressprefix = lookup(var.SubnetAddressRange, 4)
+  Subnetaddressprefix = element(var.SubnetAddressRange, 4)
 
 
 }
 
 
 
-/*
-module "VNetSpoke1" {
-  #Module location
-  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//02 VNet"
-  source = "./Modules/02 VNet"
-
-  #Module variable
-  VNetName            = var.VNet2Name
-  RGName              = module.ResourceGroupHubSpoke.Name
-  vNetLocation        = var.AzureRegion
-  vNetAddressSpace    = var.VNet2IPRange
-  EnvironmentTag      = var.EnvironmentTag
-  EnvironmentUsageTag = var.EnvironmentUsageTag
-  OwnerTag            = var.OwnerTag
-  ProvisioningDateTag = var.ProvisioningDateTag
-}
-
-module "VNetSpoke2" {
-  #Module location
-  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//02 VNet"
-  source = "./Modules/02 VNet"
-
-  #Module variable
-  VNetName            = var.VNet3Name
-  RGName              = module.ResourceGroupHubSpoke.Name
-  vNetLocation        = var.AzureRegion
-  vNetAddressSpace    = var.VNet3IPRange
-  EnvironmentTag      = var.EnvironmentTag
-  EnvironmentUsageTag = var.EnvironmentUsageTag
-  OwnerTag            = var.OwnerTag
-  ProvisioningDateTag = var.ProvisioningDateTag
-}
-
-module "VNetSpoke3" {
-  #Module location
-  #source = "github.com/dfrappart/Terra-AZModuletest//Modules//02 VNet"
-  source = "./Modules/02 VNet"
-  
-  #Module variable
-  VNetName            = var.VNet4Name
-  RGName              = module.ResourceGroupHubSpoke.Name
-  vNetLocation        = var.AzureRegion
-  vNetAddressSpace    = var.VNet4IPRange
-  EnvironmentTag      = var.EnvironmentTag
-  EnvironmentUsageTag = var.EnvironmentUsageTag
-  OwnerTag            = var.OwnerTag
-  ProvisioningDateTag = var.ProvisioningDateTag
-}
-
-*/

@@ -1,41 +1,9 @@
 ######################################################################
-# This file references the VM B sizes
+# Variables for Spoke config
 ######################################################################
 
-RGHubName             = "RG_Infra_"
-RGLogsName            = "RG_Logs_"
-RGFilesName           = "RG_Files_"
-RGkvName              = "RG_Kv_"
-AzureRegion           = "westeurope"
-VNetHubName           = "VNetHub"
-VNetHubIPRange        = ["10.231.0.0/16"]
-AZFWHub               = "AZFW"
-
-SubnetAddressRange = {
-    "0" = "10.231.0.0/24"
-    "1" = "10.231.1.0/24"
-    "2" = "10.231.2.0/24"
-    "3" = "10.231.3.0/24"
-    "4" = "10.231.4.0/24"
-
-
-  }
-
-SubnetName = {
-    "0" = "ShareSVC_Subnet_Hub"
-    "1" = "Bastion_Subnet_Hub"
-    "2" = "AzureFirewallSubnet"
-    "3" = "GatewaySubnet"
-    "4" = "AzureBastionSubnet"
-  }
-
-
-
-LAW                               = "SharedLAWWorkspace"
-LogAnalyticsSolutionName          = "ContainerInsights"
-LogAnalyticsSolutionPublisher     = "Microsoft"
-LogAnalyticsSolutionProductName   = "OMSGallery/ContainerInsights"
-
+RGSpokeName         = "RG_SpokeAKSLab"
+VNetSpokeName          = "Spoke1"
 
 EnvironmentTag      = "AKSLab"
 EnvironmentUsageTag = "PoC"

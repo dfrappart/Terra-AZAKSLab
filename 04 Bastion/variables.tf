@@ -56,12 +56,6 @@ variable "applicationTag" {
 
 }
 
-variable "longcodeTag" {
-  type    = string
-  default = "INFR"
-  description = "Tag indacating the long code, with 4 characters "
-}
-
 variable "costcenterTag" {
   type    = string
   default = "N/A"

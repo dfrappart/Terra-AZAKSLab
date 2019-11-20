@@ -1,1 +1,0 @@
-#This template is my base for AKS test such as AKS deplyment, AAD integration and other cool stuff

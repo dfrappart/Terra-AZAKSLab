@@ -2,17 +2,6 @@
 # This file defines which value are sent to output
 ######################################################
 
-######################################################
-# Resource group Hub  Output
-
-output "ResourceGroupHub_Name" {
-  value = module.ResourceGroupHub.Name
-}
-
-output "ResourceGroup1_Id" {
-  value = module.ResourceGroupHub.Id
-  sensitive = true
-}
 
 ######################################################
 # Resource group Logs  Output
@@ -139,6 +128,15 @@ output "ResourceGroupKeyVault_Id" {
 ######################################################
 # VNet Hub info Output
 
+output "ResourceGroupHub_Name" {
+  value = module.ResourceGroupHub.Name
+}
+
+output "ResourceGroupHub_Id" {
+  value = module.ResourceGroupHub.Id
+  sensitive = true
+}
+
 output "VNetHub_Name" {
   value = module.VNetHub.Name
 }
@@ -259,438 +257,169 @@ output "FW_Subnet_AddressPrefix" {
 }
 
 
-/*
 ######################################################
-# vNet Spoke1 info Output
+# KeyVault info Output
 
-output "VNet2_Name" {
-  value = module.VNetSpoke1.Name
-}
-
-output "VNet2_Id" {
-  value = module.VNetSpoke1.Id
+output "KeyVault_Name" {
+  value = module.KeyVault.Name
   sensitive = true
 }
-
-output "VNet2_AddressSpace" {
-  value = module.VNetSpoke1.AddressSpace
-  sensitive = true
-}
-
-######################################################
-# vNet Spoke2 info Output
-
-output "VNet3_Name" {
-  value = module.VNetSpoke2.Name
-}
-
-output "VNet3_Id" {
-  value = module.VNetSpoke2.Id
-  sensitive = true
-}
-
-output "VNet3_AddressSpace" {
-  value = module.VNetSpoke2.AddressSpace
-  sensitive = true
-}
-
-######################################################
-# vNet Spoke3 info Output
-
-output "VNet4_Name" {
-  value = module.VNetSpoke3.Name
-}
-
-output "VNet4_Id" {
-  value = module.VNetSpoke3.Id
-  sensitive = true
-}
-
-output "VNet4_AddressSpace" {
-  value = module.VNetSpoke3.AddressSpace
-  sensitive = true
-}
-
-######################################################
-# Diag & Log Storage account Info
-
-output "DiagStorageAccountName" {
-  value = module.DiagStorageAccount.Name
-}
-
-output "DiagStorageAccountID" {
-  value = module.DiagStorageAccount.Id
-  sensitive = true
-}
-
-output "DiagStorageAccountPrimaryBlobEP" {
-  value = module.DiagStorageAccount.PrimaryBlobEP
-  sensitive = true
-}
-
-output "DiagStorageAccountPrimaryQueueEP" {
-  value = module.DiagStorageAccount.PrimaryQueueEP
-  sensitive = true
-}
-
-output "DiagStorageAccountPrimaryTableEP" {
-  value = module.DiagStorageAccount.PrimaryTableEP
-  sensitive = true
-}
-
-output "DiagStorageAccountPrimaryFileEP" {
-  value = module.DiagStorageAccount.PrimaryFileEP
-  sensitive = true
-}
-
-output "DiagStorageAccountPrimaryAccessKey" {
-  value = module.DiagStorageAccount.PrimaryAccessKey
-  sensitive = true
-}
-
-output "DiagStorageAccountSecondaryAccessKey" {
-  value = module.DiagStorageAccount.SecondaryAccessKey
-  sensitive = true
-}
-
-######################################################
-# Files Storage account Info
-
-output "FileStorageAccountName" {
-  value = module.FileStorageAccount.Name
-}
-
-output "FileStorageAccountID" {
-  value = module.FileStorageAccount.Id
-  sensitive = true
-}
-
-output "FileStorageAccountPrimaryBlobEP" {
-  value = module.FileStorageAccount.PrimaryBlobEP
-  sensitive = true
-}
-
-output "FileStorageAccountPrimaryQueueEP" {
-  value = module.FileStorageAccount.PrimaryQueueEP
-  sensitive = true
-}
-
-output "FileStorageAccountPrimaryTableEP" {
-  value = module.FileStorageAccount.PrimaryTableEP
-  sensitive = true
-}
-
-output "FileStorageAccountPrimaryFileEP" {
-  value = module.FileStorageAccount.PrimaryFileEP
-  sensitive = true
-}
-
-output "FileStorageAccountPrimaryAccessKey" {
-  value = module.FileStorageAccount.PrimaryAccessKey
-  sensitive = true
-}
-
-output "FileStorageAccountSecondaryAccessKey" {
-  value = module.FileStorageAccount.SecondaryAccessKey
-  sensitive = true
-}
-
-######################################################
-# Subnet info Output
-######################################################
-
-######################################################
-#Bastion_Subnet
-
-output "VNet1_Subnet1_Name" {
-  value = module.Bastion_Subnet.Name
-}
-
-output "VNet1_Subnet1_Id" {
-  value = module.Bastion_Subnet.Id
-  sensitive = true
-}
-
-output "VNet1_Subnet1_AddressPrefix" {
-  value = module.Bastion_Subnet.AddressPrefix
-  sensitive = true
-}
-
-######################################################
-#ShareSVC_Subnet
-
-output "VNet1_Subnet2_Name" {
-  value = module.ShareSVC_Subnet.Name
-}
-
-output "VNet1_Subnet2_Id" {
-  value = module.ShareSVC_Subnet.Id
-  sensitive = true
-}
-
-output "VNet1_Subnet2_AddressPrefix" {
-  value = module.ShareSVC_Subnet.AddressPrefix
-  sensitive = true
-}
-######################################################
-#AZFW_Subnet
-
-output "VNet1_Subnet3_Name" {
-  value = module.FW_Subnet.Name
-}
-
-output "VNet1_Subnet3_Id" {
-  value = module.FW_Subnet.Id
-  sensitive = true
-}
-
-output "VNet1_Subnet3_AddressPrefix" {
-  value = module.FW_Subnet.AddressPrefix
-  sensitive = true
-}
-
-
-######################################################
-#AZGW_Subnet
-
-output "VNet1_Subnet4_Name" {
-  value = module.GW_Subnet.Name
-}
-
-output "VNet1_Subnet4_Id" {
-  value = module.GW_Subnet.Id
-  sensitive = true
-}
-
-output "VNet1_Subnet4_AddressPrefix" {
-  value = module.GW_Subnet.AddressPrefix
-  sensitive = true
-}
-
-######################################################
-#Managed Bastion Subnet
-
-output "VNet1_Subnet5_Name" {
-  value = module.ManagedBastion_Subnet.Name
-}
-
-output "VNet1_Subnet5_Id" {
-  value = module.ManagedBastion_Subnet.Id
-  sensitive = true
-}
-
-output "VNet1_Subnet5_AddressPrefix" {
-  value = module.ManagedBastion_Subnet.AddressPrefix
-  sensitive = true
-}
-
-######################################################
-#Spoke 1 AKS Subnet
-
-output "VNet2_Subnet1_Name" {
-  value = module.AKS_Subnet_Spoke1.Name
-}
-
-output "VNet2_Subnet1_Id" {
-  value = module.AKS_Subnet_Spoke1.Id
-  sensitive = true
-}
-
-output "VNet2_Subnet1_AddressPrefix" {
-  value = module.AKS_Subnet_Spoke1.AddressPrefix
-  sensitive = true
-}
-
-######################################################
-#Spoke 1 Virtual Nodes Subnet
-
-output "VNet2_Subnet2_Name" {
-  value = module.AKSVirtualNodes_Subnet_Spoke1.Name
-}
-
-output "VNet2_Subnet2_Id" {
-  value = module.AKSVirtualNodes_Subnet_Spoke1.Id
-  sensitive = true
-}
-
-output "VNet2_Subnet2_AddressPrefix" {
-  value = module.AKSVirtualNodes_Subnet_Spoke1.AddressPrefix
-  sensitive = true
-}
-
-######################################################
-#Spoke 2 AKS Subnet
-
-output "VNet3_Subnet1_Name" {
-  value = module.AKS_Subnet_Spoke2.Name
-}
-
-output "VNet3_Subnet1_Id" {
-  value = module.AKS_Subnet_Spoke2.Id
-  sensitive = true
-}
-
-output "VNet3_Subnet1_AddressPrefix" {
-  value = module.AKS_Subnet_Spoke2.AddressPrefix
-  sensitive = true
-}
-
-######################################################
-#Spoke 2 Virtual Nodes Subnet
-
-output "VNet3_Subnet2_Name" {
-  value = module.AKSVirtualNodes_Subnet_Spoke2.Name
-}
-
-output "VNet3_Subnet2_Id" {
-  value = module.AKSVirtualNodes_Subnet_Spoke2.Id
-  sensitive = true
-}
-
-output "VNet3_Subnet2_AddressPrefix" {
-  value = module.AKSVirtualNodes_Subnet_Spoke2.AddressPrefix
-  sensitive = true
-}
-
-######################################################
-#Spoke 3 FE_Subnet
-
-output "VNet4_Subnet1_Name" {
-  value = module.FE_Subnet_Spoke3.Name
-}
-
-output "VNet4_Subnet1_Id" {
-  value = module.FE_Subnet_Spoke3.Id
-  sensitive = true
-}
-
-output "VNet4_Subnet1_AddressPrefix" {
-  value = module.FE_Subnet_Spoke3.AddressPrefix
-  sensitive = true
-}
-
-
-######################################################
-#Spoke 3 BE_Subnet
-
-output "VNet4_Subnet2_Name" {
-  value = module.BE_Subnet_Spoke3.Name
-}
-
-output "VNet4_Subnet2_Id" {
-  value = module.BE_Subnet_Spoke3.Id
-  sensitive = true
-}
-
-output "VNet4_Subnet2_AddressPrefix" {
-  value = module.BE_Subnet_Spoke3.AddressPrefix
-  sensitive = true
-}
-
-######################################################
-#Spoke 3 Application Gateway Subnet
-
-output "VNet4_Subnet3_Name" {
-  value = module.AppGW_Subnet.Name
-}
-
-output "VNet4_Subnet3_Id" {
-  value = module.AppGW_Subnet.Id
-  sensitive = true
-}
-
-output "VNet4_Subnet3_AddressPrefix" {
-  value = module.AppGW_Subnet.AddressPrefix
-  sensitive = true
-}
-
-######################################################
-#Created Azure Keyvault
 
 output "KeyVault_Id" {
   value = module.KeyVault.Id
   sensitive = true
 }
 
-output "KeyVault_Name" {
-  value = module.KeyVault.Name
+######################################################
+# KeyVault Secret WinVMPassword info Output
+
+output "KeyVaultSecretWin_Name" {
+  value = module.StoringWinDefaultPWDInVault.Name
+
 }
 
-output "KeyVault_Uri" {
-  value = module.KeyVault.URI
+output "KeyVaultSecretWin_Id" {
+  value = module.StoringWinDefaultPWDInVault.Id
   sensitive = true
 }
 
-output "KeyVault_Sku" {
-  value = module.KeyVault.SKU
+output "KeyVaultSecretWin_Version" {
+  value = module.StoringWinDefaultPWDInVault.Version
   sensitive = true
 }
-
-
-output "KeyVault_enabled_for_disk_encryption" {
-  value = module.KeyVault.KeyVault_enabled_for_disk_encryption
-}
-
-output "KeyVault_enabled_for_template_deployment" {
-  value = module.KeyVault.KeyVault_enabled_for_template_deployment
-}
-
 
 ######################################################
-#workspace analytics output
+# KeyVault Secret AKSAADServerAppId info Output
 
-output "LAWorkspace_Name" {
+output "KeyVaultSecretAKSAADServerAppId_Name" {
+  value = module.StoringAKSAADServerAppIdInKeyVault.Name
+
+}
+
+output "KeyVaultSecretAKSAADServerAppId_Id" {
+  value = module.StoringAKSAADServerAppIdInKeyVault.Id
+  sensitive = true
+}
+
+output "KeyVaultSecretAKSAADServerAppId_Version" {
+  value = module.StoringAKSAADServerAppIdInKeyVault.Version
+  sensitive = true
+}
+
+######################################################
+# KeyVault Secret AKSAADServer Secret info Output
+
+output "KeyVaultSecretAKSAADServerAppSecret_Name" {
+  value = module.StoringAKSAADServerAppSecretInKeyVault.Name
+
+}
+
+output "KeyVaultSecretAKSAADServerAppSecret_Id" {
+  value = module.StoringAKSAADServerAppSecretInKeyVault.Id
+  sensitive = true
+}
+
+output "KeyVaultSecretAKSAADServerAppSecret_Version" {
+  value = module.StoringAKSAADServerAppSecretInKeyVault.Version
+  sensitive = true
+}
+
+######################################################
+# KeyVault Secret AKSAADClient Id info Output
+
+output "KeyVaultSecretAKSAADClientAppId_Name" {
+  value = module.StoringAKSAADClientAppIdInVault.Name
+
+}
+
+output "KeyVaultSecretAKSAADClientAppId_Id" {
+  value = module.StoringAKSAADClientAppIdInVault.Id
+  sensitive = true
+}
+
+output "KeyVaultSecretAKSAADClientAppId_Version" {
+  value = module.StoringAKSAADClientAppIdInVault.Version
+  sensitive = true
+}
+
+######################################################
+# KeyVault Secret AKS App Id info Output
+
+output "KeyVaultSecretAKSSPAppId_Name" {
+  value = module.StoringAKSSPAppIdInVault.Name
+
+}
+
+output "KeyVaultSecretAKSSPAppId_Id" {
+  value = module.StoringAKSSPAppIdInVault.Id
+  sensitive = true
+}
+
+output "KeyVaultSecretAKSSPAppId_Version" {
+  value = module.StoringAKSSPAppIdInVault.Version
+  sensitive = true
+}
+
+######################################################
+# KeyVault Secret AKS App Secret info Output
+
+output "KeyVaultSecretAKSSPSecret_Name" {
+  value = module.StoringAKSSPSecretInVault.Name
+
+}
+
+output "KeyVaultSecretAKSSPSecret_Id" {
+  value = module.StoringAKSSPSecretInVault.Id
+  sensitive = true
+}
+
+output "KeyVaultSecretAKSSPSecret_Version" {
+  value = module.StoringAKSSPSecretInVault.Version
+  sensitive = true
+}
+
+######################################################
+#Output for the Log Analytics Workspace module
+
+output "SharedLAWS_Name" {
   value = module.SharedLAWS.Name
-
 }
 
-
-output "LAWorkspace_Location" {
+output "SharedLAWS_Location" {
   value = module.SharedLAWS.Location
-
 }
 
-output "LAWorkspace_RG" {
+output "SharedLAWS_RG" {
   value = module.SharedLAWS.RG
-
 }
 
-output "LAWorkspace_Sku" {
+output "SharedLAWS_Sku" {
   value = module.SharedLAWS.Sku
-
 }
 
-output "LAWorkspace_Id" {
+output "SharedLAWS_Id" {
   value = module.SharedLAWS.Id
   sensitive = true
-
 }
 
-output "LAWorkspace_PSK" {
-  sensitive = true
+output "SharedLAWS_PSK" {
   value = module.SharedLAWS.PSK
-
-}
-
-output "LAWorkspace_SSK" {
   sensitive = true
-  value = module.SharedLAWS.SSK
-
 }
 
-output "LAWorkspace_WSId" {
+output "SharedLAWS_SSK" {
+  value = module.SharedLAWS.SSK
+  sensitive = true
+}
 
+output "SharedLAWS_WSId" {
   value = module.SharedLAWS.WSId
   sensitive = true
-
 }
 
-output "LAWorkspace_PortalUrl" {
-
+output "SharedLAWS_PortalUrl" {
   value = module.SharedLAWS.PortalUrl
-
 }
 
-*/
 
 

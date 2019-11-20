@@ -51,13 +51,13 @@ variable "VNetHubIPRange" {
 
 variable "SubnetAddressRange" {
   #Note: Subnet must be in range included in the vNET Range
-  type = map
+  type = list
 }
 
 
 
 variable "SubnetName" {
-  type = map
+  type = list
 }
 
 
