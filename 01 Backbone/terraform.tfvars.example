@@ -41,3 +41,33 @@ EnvironmentTag      = "AKSLab"
 EnvironmentUsageTag = "PoC"
 OwnerTag            = "DF"
 ProvisioningDateTag = "20191117"
+
+#################################################################
+# Variables for Azure Registration
+
+AzureSubscriptionID = ""
+AzureClientID       = ""
+AzureObjectID       = ""
+AzureClientSecret   = ""
+AzureTenantID       = ""
+
+#################################################################
+# Variables for VM config
+
+VMAdminName         = "vmadmin"
+VMAdminPassword     = ""
+AzurePublicSSHKey   = ""
+
+#################################################################
+#Variables for AKS config
+
+AKSAADAppServer_AppId           = ""
+AKSAADAppServer_AppSecret       = ""
+AKSAADAppClient_AppId           = ""
+AKSSP_AppId                     = ""
+AKSSP_Secret                    = ""
+
+#################################################################
+#Variables for key vault access policy config
+
+AzureServicePrincipalInteractive = ""

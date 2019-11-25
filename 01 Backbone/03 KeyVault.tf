@@ -67,7 +67,7 @@ module "UserAccessPolicy" {
   source = "./Modules/06 KeyVault Access Policy"
 
   #Modules Variables
-  VaultId             = module.KeyVault.Id
+  VaultId               = module.KeyVault.Id
   RGVaultName           = module.ResourceGroupKeyVault.Name
   KeyVaultTenantId      = var.AzureTenantID
   KeyVaultAPObjectId    = var.AzureServicePrincipalInteractive
@@ -79,7 +79,7 @@ module "TerraformAccessPolicy" {
   source = "./Modules/06 KeyVault Access Policy"
 
   #Modules Variables
-  VaultId             = module.KeyVault.Id
+  VaultId               = module.KeyVault.Id
   RGVaultName           = module.ResourceGroupKeyVault.Name
   KeyVaultTenantId      = var.AzureTenantID
   KeyVaultAPObjectId    = data.azurerm_client_config.currentclientconfig.service_principal_object_id
