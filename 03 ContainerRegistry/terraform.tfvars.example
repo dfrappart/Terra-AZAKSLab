@@ -10,3 +10,20 @@ OwnerTag ="DFR"
 ProvisioningDateTag = "20191104"
 ACRSku = "standard"
 #ACRReplicationList = ["northeurope","francecentral"]
+
+#################################################################
+# Variables for Azure Registration
+
+AzureSubscriptionID = ""
+AzureClientID       = ""
+AzureObjectID       = ""
+AzureClientSecret   = ""
+AzureTenantID       = ""
+
+#################################################################
+#Backend data sources variables
+
+statestoa               = ""
+statecontainer          = ""
+statestoakey            = ""
+statekey                = ""

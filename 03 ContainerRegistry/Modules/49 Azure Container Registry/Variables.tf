@@ -53,7 +53,7 @@ variable "ACRSku" {
 
 #The list of Region for replication of the ACR
 variable "ACRReplList" {
-  type          = "list"
+  type          = list
   default       = null
   description   = "The list of Region for replication of the ACR"
 

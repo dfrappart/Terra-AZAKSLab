@@ -38,3 +38,52 @@ variable "ACRReplicationList" {
     default = ["northeurope","francecentral"]
 
 }
+
+#################################################################
+# Variables for Azure Registration
+#################################################################
+
+variable "AzureSubscriptionID" {
+  type    = string
+}
+
+variable "AzureClientID" {
+  type    = string
+}
+
+variable "AzureObjectID" {
+  type    = string
+}
+
+variable "AzureClientSecret" {
+  type    = string
+
+}
+
+variable "AzureTenantID" {
+  type    = string
+}
+
+#################################################################
+#Remote State variable
+#################################################################
+
+variable "statestoa" {
+  type    = string
+
+}
+
+variable "statecontainer" {
+  type    = string
+
+}
+
+variable "statekey" {
+  type    = string
+
+}
+
+variable "statestoakey" {
+  type    = string
+
+}
