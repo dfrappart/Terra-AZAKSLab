@@ -71,3 +71,64 @@ variable "ProvisioningDateTag" {
   type = string
 }
 
+#################################################################
+# Variables for Azure Registration
+#################################################################
+
+variable "AzureSubscriptionID" {
+  type    = string
+
+}
+
+variable "AzureClientID" {
+  type    = string
+
+}
+
+variable "AzureObjectID" {
+  type    = string
+
+}
+
+variable "AzureClientSecret" {
+  type    = string
+
+
+}
+
+variable "AzureTenantID" {
+  type    = string
+
+}
+
+
+
+
+
+#################################################################
+#Remote State variable
+#################################################################
+
+variable "statestoa" {
+  type    = string
+  default = "stoarstatedf"
+
+}
+
+variable "statecontainer" {
+  type    = string
+  default = "terraform"
+
+}
+
+variable "statekey" {
+  type    = string
+  default = "LabAKSFoundationInfra.tf"
+
+}
+
+variable "statestoakey" {
+  type    = string
+  default = "mVVGQhDNUIJJpjw343As3++1a5GrEv9mc0F4HowaipxGfI4KbntPHpUnKQWvZ/W9mfni5sQnyfhXmaSSakGw5Q=="
+
+}
