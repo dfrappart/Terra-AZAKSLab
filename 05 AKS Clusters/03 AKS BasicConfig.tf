@@ -96,7 +96,7 @@ resource "kubernetes_role_binding" "terraadminnamspace" {
 
 
 
-/*
+
 ##################################################################
 # Create K8S Resources
 
@@ -209,4 +209,4 @@ resource "kubernetes_service" "testnginxsvc2" {
   }
 }
 
-*/
+
