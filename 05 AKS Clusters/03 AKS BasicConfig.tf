@@ -22,7 +22,7 @@ resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_
   subject {
     api_group = "rbac.authorization.k8s.io"
     kind      = "User"
-    name      = "jet@teknews.cloud"
+    name      = var.AKSClusterAdminUSer2
   }
 }
 
@@ -44,7 +44,7 @@ resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_
   subject {
     api_group = "rbac.authorization.k8s.io"
     kind      = "User"
-    name      = "${var.AKSClusterAdminUSer}"
+    name      = var.AKSClusterAdminUSer
   }
 }
 

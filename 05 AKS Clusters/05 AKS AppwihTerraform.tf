@@ -1,6 +1,6 @@
 ##################################################################
 # Create K8S Resources
-/*
+
 #Create namespace for azure vote app
 resource "kubernetes_namespace" "azap_namespace" {
   metadata {
@@ -162,7 +162,7 @@ resource "kubernetes_service" "azure-vote-front" {
     }
   }
 }
-
+/*
 ##################################################################
 # Network policy
 
