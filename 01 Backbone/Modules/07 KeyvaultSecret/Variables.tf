@@ -5,34 +5,34 @@
 #Variable declaration for Module
 
 variable "PasswordName" {
-  type = "string"
+  type = string
 }
 
 variable "PasswordValue" {
-  type = "string"
+  type = string
 }
 
 variable "KeyVaultId" {
-  type = "string"
+  type = string
 }
 
 variable "EnvironmentTag" {
-  type    = "string"
+  type    = string
   default = "Poc"
 }
 
 variable "EnvironmentUsageTag" {
-  type    = "string"
+  type    = string
   default = "Poc usage only"
 }
 
 variable "OwnerTag" {
-  type    = "string"
+  type    = string
   default = "That would be me"
 }
 
 variable "ProvisioningDateTag" {
-  type    = "string"
+  type    = string
   default = "Today :)"
 }
 

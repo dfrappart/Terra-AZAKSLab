@@ -6,28 +6,28 @@
 
 #The Name of the FW
 variable "FWName" {
-  type = "string"
+  type = string
 }
 
 #The RG in which the route table is attached to
 variable "RGName" {
-  type = "string"
+  type = string
 }
 
 #The location of the FW
 variable "FWLocation" {
-  type = "string"
+  type = string
 }
 
 #The name of the ip config fo rthe Azure Firewall
 variable "FWIPConfigName" {
-  type = "string"
+  type = string
   default = "Config"
 }
 
 #The id of the subnet on which the FW is located
 variable "FWSubnetId" {
-  type = "string"
+  type = string
 }
 
 
@@ -38,22 +38,22 @@ variable "FWSubnetId" {
 #environment Tag usage specifying the use case of the environment
 
 variable "EnvironmentTag" {
-  type    = "string"
+  type    = string
   default = "Poc"
 }
 
 variable "EnvironmentUsageTag" {
-  type    = "string"
+  type    = string
   default = "Poc usage only"
 }
 
 variable "OwnerTag" {
-  type    = "string"
+  type    = string
   default = "That would be me"
 }
 
 variable "ProvisioningDateTag" {
-  type    = "string"
+  type    = string
   default = "Today :)"
 }
 
