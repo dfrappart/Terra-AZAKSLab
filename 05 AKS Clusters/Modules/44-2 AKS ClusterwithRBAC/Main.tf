@@ -7,11 +7,19 @@
 
 resource "azurerm_kubernetes_cluster" "TerraAKSwithRBAC" {
 
+  lifecycle {
+    ignore_changes = [
+      #Ignore change for node count since it is autoscaling
+      default_node_pool[0].node_count
+
+    ]
+  }
+  
   name                = var.AKSClusName
   location            = var.AKSLocation
   resource_group_name = var.AKSRGName
   node_resource_group = var.AKSNodesRG
-  
+  /*
   agent_pool_profile {
     name                  = lower(var.AKSAgentPoolName)
     count                 = var.AKSNodeCount
@@ -27,6 +35,23 @@ resource "azurerm_kubernetes_cluster" "TerraAKSwithRBAC" {
     max_count             = var.MaxAutoScaleCount
     
    
+  }
+*/
+  default_node_pool {
+    name                       = lower(var.AKSAgentPoolName)
+    vm_size                    = var.AKSNodeInstanceType
+    availability_zones         = var.AKSAZ
+    enable_auto_scaling        = var.EnableAKSAutoScale      
+    enable_node_public_ip      = var.EnableNodePublicIP        
+    max_pods                   = var.AKSMaxPods
+    os_disk_size_gb            = var.AKSNodeOSDiskSize   
+    type                       = var.AKSNodePoolType
+    vnet_subnet_id             = var.AKSSubnetId
+    min_count                  = var.MinAutoScaleCount
+    max_count                  = var.MaxAutoScaleCount
+    node_count                 = var.AKSNodeCount
+
+
   }
   
   dns_prefix = lower(var.AKSprefix)

@@ -176,6 +176,11 @@ variable "EnableAKSAutoScale" {
   default = null
 }
 
+variable "EnableNodePublicIP" {
+  type = string
+  default = null
+}
+
 variable "MinAutoScaleCount" {
   type    = string
   default = null
