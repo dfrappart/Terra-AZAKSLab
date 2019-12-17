@@ -26,7 +26,6 @@ resource "kubernetes_cluster_role_binding" "Terra_builtin_clubsteradmin_binding_
   }
 }
 
-
 ##################################################################
 # associate user & groups to cluster admin role
 

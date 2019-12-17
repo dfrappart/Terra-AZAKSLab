@@ -2,7 +2,7 @@
 # Network policy
 
 #Default network policy deny all in namespace terra-test-namespace ingress
-/*
+
 resource "kubernetes_network_policy" "terra_defaultnp_denyallin_ns_terra-test-namespace" {
   metadata {
     name      = "defaultnp-denyall-in"
@@ -60,8 +60,8 @@ resource "kubernetes_network_policy" "terra_defaultnp_denyalleg_ns_terra-test-na
 
 */
 
-#Network policy allowing external traffic on testnginxpod
-/*
+#Network policy allowing external traffic on testnginxdeployment
+
 resource "kubernetes_network_policy" "Allow-External" {
   metadata {
     name      = "allow-external"
@@ -80,4 +80,3 @@ resource "kubernetes_network_policy" "Allow-External" {
   }
 }
 
-*/
