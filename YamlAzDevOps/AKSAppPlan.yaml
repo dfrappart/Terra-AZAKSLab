@@ -1,0 +1,66 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+  branches:
+    include:
+    - master
+  paths:
+    include:
+    - 'App in AKS/*'
+    exclude:
+    - YamlAzDevOps/*
+    - AKS/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+
+steps:
+
+- script: |
+   echo Getting Terraform
+
+   
+   wget https://releases.hashicorp.com/terraform/0.12.16/terraform_0.12.16_linux_amd64.zip
+   
+   unzip -a terraform_0.12.16_linux_amd64.zip
+   
+   sudo mv ./terraform /usr/local/bin/terraform
+   
+   terraform version
+   
+
+  displayName: 'Download and update Terraform'
+
+- task: DownloadSecureFile@1
+  displayName: 'Download secure file'
+  inputs:
+    secureFile: terraformapp.tfvars
+
+- task: CopyFiles@2
+  displayName: 'Copy Files to: $(Build.SourcesDirectory)'
+  inputs:
+    SourceFolder: '$(Agent.TempDirectory)'
+    TargetFolder: '$(Build.SourcesDirectory)/App in AKS'
+
+- script: |
+   echo Init Terraform
+   
+   terraform init -no-color -backend-config="key=${Backend_Storage_key}"
+   
+  workingDirectory: 'App in AKS'
+  displayName: 'Terraform Init'
+  env:
+    Backend_Storage_key: cloudexpoazdevopsymlApp.tfstate
+
+
+- script: |
+   echo Terraform plan
+   
+   terraform plan -var-file terraformapp.tfvars -out=tfplan -no-color -input=false
+   
+  workingDirectory: 'App in AKS'
+  displayName: 'terraform plan'
